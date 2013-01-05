@@ -44,18 +44,7 @@ public class Controller extends Thread{
 	}
 
 	private void draw(Canvas c) {
-		Paint paint = new Paint();
-		RectF r = new RectF();
-		r.top = 0;
-		r.left = 0;
-		r.bottom = c.getHeight();
-		r.right = c.getWidth();
-		paint.setColor(Color.rgb(0, 0, (int) (200*Math.random())));
-		
-		c.drawRect(r, paint);
-		
-		scr.block.draw(c);
-		
+		scr.map.draw(c);
 	}
 
 

@@ -1,17 +1,17 @@
 package display;
 
-import data.Infos;
-import level.Block;
+import level.Map;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import data.Infos;
 
 public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 	
 	Controller controller;
 	
-	public Block block = new Block(Infos.block);
+	public Map map = new Map(Infos.level1);
 	
 	public Screen(Context context, AttributeSet attrs) {
 		super(context, attrs);
