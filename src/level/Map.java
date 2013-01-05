@@ -12,6 +12,7 @@ public class Map {
 	}
 
 	Block block = new Block(Infos.block);
+	Ghost ghost = new Ghost(Infos.ghost);
 
 	public void draw(Canvas c) {
 
@@ -23,6 +24,12 @@ public class Map {
 
 		block.sizeW = w / mapW;
 		block.sizeH = h / mapH;
+				
+		ghost.sizeW = block.sizeW;
+		ghost.sizeH = block.sizeH;
+		
+		ghost.x = 0.5f;
+		ghost.y = 0.5f;
 		
 		for (int y = 0; y < map.maze[0].length; y++) {
 
@@ -32,6 +39,8 @@ public class Map {
 				block.y = y / mapH;
 				if (oo)
 					block.draw(c);
+				
+				ghost.draw(c);
 
 			}
 		}

@@ -45,6 +45,7 @@ public class Controller extends Thread{
 
 	private void draw(Canvas c) {
 		scr.map.draw(c);
+		
 	}
 
 

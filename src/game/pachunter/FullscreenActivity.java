@@ -13,6 +13,9 @@ public class FullscreenActivity extends Activity {
 
 		Infos.block = BitmapFactory.decodeResource(getResources(),
 				R.drawable.block);
+		
+		Infos.ghost = BitmapFactory.decodeResource(getResources(),
+				R.drawable.ghosts);
 
 		setContentView(R.layout.activity_fullscreen);
 
