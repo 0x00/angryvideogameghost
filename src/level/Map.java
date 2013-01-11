@@ -2,12 +2,12 @@ package level;
 
 import data.Infos;
 import android.graphics.Canvas;
-import map.Generator;
+import map.Landscape;
 
 public class Map {
-	private Generator map;
+	private Landscape map;
 
-	public Map(Generator map) {
+	public Map(Landscape map) {
 		this.map = map;
 	}
 
