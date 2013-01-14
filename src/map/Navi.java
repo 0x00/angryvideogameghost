@@ -61,7 +61,7 @@ public class Navi {
 				
 				double d2 = Math.sqrt(Math.pow(o2.x - target.x, 2)
 						- Math.pow(o2.y - target.y, 2));
-				return (int) ((d2-d1) * 1000);
+				return (int) ((d1-d2) * 1000);
 			}
 		};
 		Collections.sort(todo, distanceCompo);
