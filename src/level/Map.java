@@ -1,31 +1,22 @@
 package level;
 
-import data.Infos;
-import android.graphics.Canvas;
-import android.util.Log;
 import map.Landscape;
+import android.graphics.Canvas;
+import data.Infos;
 
 public class Map {
 	public Landscape map;
 	
 	public int transferX(float x){
 		int X = map.maze.length;
-		return (int) (x*X+0.5);
+		return (int) (x*X);
 	}
 
 	public int transferY(float y){
 		int Y = map.maze[0].length;
-		return (int) (y*Y+0.5);
+		return (int) (y*Y);
 	}
 	
-	public void setPlayerTargetX(float x){
-		Log.d("x", x+" "+transferX(x));
-		Infos.player.toX = transferX(x)/(float)map.maze.length;
-	}
-	public void setPlayerTargetY(float y){
-		Log.d("y", y+" "+transferY(y));
-		Infos.player.toY = transferY(y)/(float)map.maze[0].length;
-	}
 
 	public Map(Landscape map) {
 		this.map = map;

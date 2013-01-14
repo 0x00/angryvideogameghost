@@ -30,8 +30,10 @@ public class FullscreenActivity extends Activity {
 				float x = event.getX()/v.getWidth();
 				float y = event.getY()/v.getHeight();
 				
-				Infos.player.toX = x;
-				Infos.player.toY = y;
+				Screen screen = (Screen) findViewById(R.id.screen1);
+				
+				Infos.player.toX = screen.map.transferX(x);
+				Infos.player.toY = screen.map.transferY(y);
 				
 				Log.d("goto", "goto: "+x+", "+y);
 				

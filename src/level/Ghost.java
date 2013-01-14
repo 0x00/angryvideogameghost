@@ -6,8 +6,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class Ghost {
-	public float x = .5f;
-	public float y = .5f;
+	public float x = 0;
+	public float y = 0;
 	
 	public float toX = x;
 	public float toY = y;
@@ -29,9 +29,9 @@ public class Ghost {
 	
 	public void draw(Canvas c){
 		
-		float X = x*c.getWidth();
-		float Y = y*c.getHeight();
-		target = new RectF(X-sizeW/2,Y-sizeH/2, X+sizeW/2, Y+sizeH/2);
+		float X = x*sizeW;
+		float Y = y*sizeH;
+		target = new RectF(X+3,Y+3, X+sizeW-3, Y+sizeH-3);
 		
 		c.drawBitmap(gfx,rect,target,null);
 	}
