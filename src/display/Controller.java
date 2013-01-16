@@ -58,7 +58,8 @@ public class Controller extends Thread{
 				default:
 					break;
 				}
-			}else{
+			}else if(Math.abs(x-toX)<1 && Math.abs(y-toY)<1){
+				
 				Infos.player.x = toX;
 				Infos.player.y = toY;
 			}
