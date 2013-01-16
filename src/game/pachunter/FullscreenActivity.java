@@ -18,30 +18,30 @@ public class FullscreenActivity extends Activity {
 
 		Infos.block = BitmapFactory.decodeResource(getResources(),
 				R.drawable.block);
-		
+
 		Infos.ghost = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ghosts);
-		
+
 		
 		OnTouchListener touch = new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				float x = event.getX()/v.getWidth();
-				float y = event.getY()/v.getHeight();
-				
+				float x = event.getX() / v.getWidth();
+				float y = event.getY() / v.getHeight();
+
 				Screen screen = (Screen) findViewById(R.id.screen1);
-				
+
 				Infos.player.toX = screen.map.transferX(x);
 				Infos.player.toY = screen.map.transferY(y);
-				
-				Log.d("goto", "goto: "+x+", "+y);
-				
+
+				Log.d("goto", "goto: " + x + ", " + y);
+
 				return false;
 			}
-			
+
 		};
-		
+
 		setContentView(R.layout.activity_fullscreen);
 
 		Screen screen = (Screen) findViewById(R.id.screen1);

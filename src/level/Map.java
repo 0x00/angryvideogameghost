@@ -24,7 +24,7 @@ public class Map {
 	}
 
 	Block block = new Block(Infos.block);
-	Ghost ghost = new Ghost(Infos.ghost);
+	public Ghost ghost = new Ghost(Infos.ghost);
 	
 
 	public void draw(Canvas c) {
@@ -51,10 +51,9 @@ public class Map {
 				block.y = y / mapH;
 				if (oo)
 					block.draw(c);
-				
-				ghost.draw(c);
-
 			}
 		}
+		
+		ghost.draw(c);
 	}
 }

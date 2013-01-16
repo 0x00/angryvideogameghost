@@ -6,8 +6,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 
 public class Ghost {
-	public float x = 0;
-	public float y = 0;
+	public float x = 7;
+	public float y = 12;
 	
 	public float toX = x;
 	public float toY = y;

@@ -26,20 +26,18 @@ public class Controller extends Thread{
 		while (alive) {
 
 			delta();
-
 			
-			
-			int x = (int) Infos.player.x;
-			int y = (int) Infos.player.y;
+			int x = (int) (Infos.player.x+0.5);
+			int y = (int) (Infos.player.y+0.5);
 
-			int toX = (int) Infos.player.toX;
-			int toY = (int) Infos.player.toY;
+			int toX = (int) (Infos.player.toX+0.5);
+			int toY = (int) (Infos.player.toY+0.5);
 			
 			String path = new Navi(scr.map.map).findPath(x,y,toX,toY);
 			
 			if(path.length()>0){
 				
-				Log.d("path",x+","+y+" "+toX+","+toY+" "+path);
+				Log.d("block path",x+","+y+" "+toX+","+toY+" "+path);
 				
 				char direction = path.charAt(0);
 				
@@ -60,6 +58,9 @@ public class Controller extends Thread{
 				default:
 					break;
 				}
+			}else{
+				Infos.player.x = toX;
+				Infos.player.y = toY;
 			}
 			
 			Canvas c = null;
@@ -82,7 +83,6 @@ public class Controller extends Thread{
 	private void draw(Canvas c) {
 		c.drawColor(Color.BLACK);
 		scr.map.draw(c);
-		
 	}
 
 
