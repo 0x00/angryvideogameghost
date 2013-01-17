@@ -11,7 +11,6 @@ public class Ghost extends PathAI {
 		border = 3;
 		if (this.gfx != null)
 			rect = new Rect(0, 0, gfx.getWidth(), gfx.getHeight());
-	
 
 		this.landscape = landscape;
 	}
