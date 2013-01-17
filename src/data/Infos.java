@@ -8,6 +8,6 @@ import android.graphics.Bitmap;
 public class Infos {
 	public static Bitmap block;
 	public static Bitmap ghost;
-	public static Landscape level1 = new ValidMapGenerator(10, 16).landscape;
+	public static Landscape level1 = new ValidMapGenerator(20, 30).map;
 	public static Ghost player;
 }

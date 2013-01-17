@@ -3,6 +3,7 @@ package map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Navi {
@@ -12,11 +13,33 @@ public class Navi {
 	public Navi(Landscape map) {
 		this.map = map;
 	}
+	
+	public void dumpPath(){
+		for (int y = 0; y < map.maze[0].length; y++) {
 
-	class Point {
+			for (int x = 0; x < map.maze.length; x++) {
+				
+				boolean painted = false;
+				for(Point p : path2){
+					if(p.x==x && p.y==y && !painted){
+						System.out.print("@");
+						painted = true;
+					}
+				}
+				
+				if(!painted){
+					String item = map.maze[x][y].type == 0 ? "_" : "Q";
+					System.out.print(item);
+				}
+			}
+			System.out.println();
+		}
+	}
+
+	public class Point {
 		public int x;
 		public int y;
-		public String path = "";
+		List<Point> path2 = new LinkedList<Point>();
 
 		public Point(int x, int y) {
 			this.x = x;
@@ -25,7 +48,7 @@ public class Navi {
 
 		@Override
 		public String toString() {
-			return x + "," + y + ":" + path;
+			return x + "," + y;
 		}
 
 		@Override
@@ -37,9 +60,9 @@ public class Navi {
 
 	List<Point> visited = new ArrayList<Point>();
 	List<Point> todo = new ArrayList<Point>();
-	String path = "";
+	List<Point> path2 = new LinkedList<Point>();
 
-	void add(Point add, String actualPath, String dir, final Point target) {
+	void add(Point add, Point actual, String dir, final Point target) {
 
 		if (todo.contains(add) || visited.contains(add))
 			return;
@@ -49,7 +72,10 @@ public class Navi {
 
 			if (map.maze[add.x][add.y].type == 0) {
 				todo.add(add);
-				add.path = actualPath + dir;
+				
+				Point p = new Point(add.x, add.y);
+				add.path2 = new ArrayList<Navi.Point>(actual.path2);
+				add.path2.add(p);
 			}
 		}
 
@@ -74,14 +100,14 @@ public class Navi {
 		visited.add(here);
 
 		if (here.equals(target)) {
-			path = here.path;
+			path2 = here.path2;
 			return;
 		}
 
-		add(new Point(here.x - 1, here.y), here.path, "w", target);
-		add(new Point(here.x + 1, here.y), here.path, "e", target);
-		add(new Point(here.x, here.y - 1), here.path, "n", target);
-		add(new Point(here.x, here.y + 1), here.path, "s", target);
+		add(new Point(here.x - 1, here.y), here, "w", target);
+		add(new Point(here.x + 1, here.y), here, "e", target);
+		add(new Point(here.x, here.y - 1), here, "n", target);
+		add(new Point(here.x, here.y + 1), here, "s", target);
 
 		if (todo.size() > 0) {
 			expand(target);
@@ -89,9 +115,10 @@ public class Navi {
 
 	}
 
-	public String findPath(int x, int y, int tx, int ty) {
+	public List<Point> findPath(int x, int y, int tx, int ty) {
+		
 		todo.add(new Point(x, y));
 		expand(new Point(tx, ty));
-		return path;
+		return path2;
 	}
 }

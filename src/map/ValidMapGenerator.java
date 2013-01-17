@@ -4,9 +4,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import map.Navi.Point;
+
 public class ValidMapGenerator {
 
-	Landscape map;
+	public Landscape map;
+
+	boolean check2(int startX, int startY) {
+
+		List<Point> path = new Navi(map).findPath(startX, startY, 0, 0);
+		if (path.size() == 0) {
+			return false;
+		}
+
+		path = new Navi(map)
+				.findPath(0, 0, map.maze.length-1, map.maze[0].length-1);
+		if (path.size() == 0) {
+			return false;
+		}
+
+		return true;
+	}
 
 	boolean check(int startX, int startY) {
 		boolean valid = true;
@@ -23,9 +41,9 @@ public class ValidMapGenerator {
 				if (valid) {
 					Block m = map.maze[x][y];
 					if (m.type == 0) {
-						String path = new Navi(map).findPath(startX, startY, x,
-								y);
-						if (path.length() == 0) {
+						List<Point> path = new Navi(map).findPath(startX,
+								startY, x, y);
+						if (path.size() == 0) {
 							valid = false;
 							break;
 						}
@@ -39,8 +57,7 @@ public class ValidMapGenerator {
 		return valid;
 	}
 
-	public Landscape landscape;
-
+	@SuppressWarnings("unused")
 	public ValidMapGenerator(int w, int h) {
 
 		long round = 0;
@@ -48,24 +65,27 @@ public class ValidMapGenerator {
 
 		System.out.println("Generator init");
 		while (!valid) {
-			map = new Landscape(w, h, 0.8);
+			map = new Landscape(w, h, 0.7);
 			round++;
 			System.out.println("next round #" + round);
 			map.dump();
 
 			System.out.println("generated. testing for plausibility..");
-			valid = check(w / 2, h / 2);
+			valid = check2(w / 2, h / 2);
 
 			if (!valid) {
 				System.out.println("not plausible next try");
 				System.out.println();
 
-				remove(10);
-
+				while (!valid && false) {
+					System.out.println("removing blocks...");
+					remove(10);
+					map.dump();
+					valid = check(w / 2, h / 2);
+				}
 			}
 			if (valid) {
 				System.out.println("world is ok");
-				landscape = map;
 			}
 		}
 	}
