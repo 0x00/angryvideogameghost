@@ -14,11 +14,13 @@ public class Drawable extends Entity {
 	public Rect rect;
 	public RectF target;
 	
+	public float border=0;
+	
 	public void draw(Canvas c) {
 
 		float X = x * sizeW;
 		float Y = y * sizeH;
-		target = new RectF(X + 3, Y + 3, X + sizeW - 3, Y + sizeH - 3);
+		target = new RectF(X + border, Y + border, X + sizeW - border, Y + sizeH - border);
 
 		c.drawBitmap(gfx, rect, target, null);
 	}
