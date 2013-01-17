@@ -93,6 +93,7 @@ public class Navi {
 		Collections.sort(todo, distanceCompo);
 	}
 
+	boolean found = false;
 	void expand(Point target) {
 		Point here = todo.get(0);
 
@@ -101,6 +102,7 @@ public class Navi {
 
 		if (here.equals(target)) {
 			path2 = here.path2;
+			found = true;
 			return;
 		}
 
@@ -109,16 +111,13 @@ public class Navi {
 		add(new Point(here.x, here.y - 1), here, "n", target);
 		add(new Point(here.x, here.y + 1), here, "s", target);
 
-		if (todo.size() > 0) {
-			expand(target);
-		}
-
 	}
 
 	public List<Point> findPath(int x, int y, int tx, int ty) {
-		
 		todo.add(new Point(x, y));
-		expand(new Point(tx, ty));
+		while(todo.size()>0 && !found){
+			expand(new Point(tx, ty));
+		}
 		return path2;
 	}
 }

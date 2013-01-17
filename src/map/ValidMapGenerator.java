@@ -11,6 +11,9 @@ public class ValidMapGenerator {
 	public Landscape map;
 
 	boolean check2(int startX, int startY) {
+		
+		if (map.maze[startX][startY].type != 0)
+			return false;
 
 		List<Point> path = new Navi(map).findPath(startX, startY, 0, 0);
 		if (path.size() == 0) {
