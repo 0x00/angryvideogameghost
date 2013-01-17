@@ -20,11 +20,14 @@ public class Map {
 
 	public Map(Landscape map) {
 		this.map = map;
-		Infos.player = ghost;
+		ghost = new Ghost(Infos.ghostBitmap, this.map);
 	}
 
-	Block block = new Block(Infos.block);
-	public Ghost ghost = new Ghost(Infos.ghost);
+	Block block = new Block(Infos.blockBitmap);
+	
+	/* this is the Player */
+	public Ghost ghost;
+	
 	
 
 	public void draw(Canvas c) {

@@ -16,10 +16,10 @@ public class FullscreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Infos.block = BitmapFactory.decodeResource(getResources(),
+		Infos.blockBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.block);
 
-		Infos.ghost = BitmapFactory.decodeResource(getResources(),
+		Infos.ghostBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ghosts);
 
 		
@@ -32,8 +32,8 @@ public class FullscreenActivity extends Activity {
 
 				Screen screen = (Screen) findViewById(R.id.screen1);
 
-				Infos.player.toX = screen.map.transferX(x);
-				Infos.player.toY = screen.map.transferY(y);
+				screen.map.ghost.toX = screen.map.transferX(x);
+				screen.map.ghost.toY = screen.map.transferY(y);
 
 				Log.d("goto", "goto: " + x + ", " + y);
 
