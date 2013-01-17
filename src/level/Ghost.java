@@ -60,6 +60,8 @@ public class Ghost {
 		y += 0.2 * delta * dy;
 		
 		if(Math.abs(x-direction.x)<0.5 && Math.abs(y-direction.y)<0.5){
+			x = direction.x;
+			y = direction.y;
 			moving = false;
 		}
 	}

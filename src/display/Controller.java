@@ -36,9 +36,7 @@ public class Controller extends Thread {
 			int toY = (int) (Infos.player.toY + 0.5);
 
 			if (Math.abs(x - toX) < 1 && Math.abs(y - toY) < 1) {
-				Log.d("path", "stop");
-				Infos.player.x = toX;
-				Infos.player.y = toY;
+				/* Log.d("path", "stop"); */
 			} else if (Infos.player.moving) {
 				Log.d("path", "direct movement");
 				Infos.player.move(delta);
