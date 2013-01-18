@@ -12,8 +12,8 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 	
 	Controller controller;
 	
-	Landscape level1 = new ValidMapGenerator(14, 20).map;
-	public Map map = new Map(level1);
+	
+	public Map map = new Map();
 	
 	public Screen(Context context, AttributeSet attrs) {
 		super(context, attrs);

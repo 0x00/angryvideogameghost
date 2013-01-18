@@ -1,7 +1,7 @@
 package level;
 
 public class Entity {
-	public float x = 7;
-	public float y = 10;
+	public float x = -1;
+	public float y = -1;
 
 }
