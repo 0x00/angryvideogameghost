@@ -1,8 +1,23 @@
 package map;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Landscape {
 
+	public Block random() {
+		Collections.shuffle(blocks);
+		for (Block b : blocks) {
+			if (b.type == 0) {
+				return b;
+			}
+		}
+		return null;
+	}
+
 	public Block maze[][];
+	public List<Block> blocks = new LinkedList<Block>();
 	private double threshold = 0.8;
 
 	public Landscape(int w, int h) {
@@ -21,7 +36,9 @@ public class Landscape {
 		for (int y = 0; y < maze[0].length; y++)
 			for (int x = 0; x < maze.length; x++) {
 				int v = Math.random() > threshold ? 1 : 0;
-				maze[x][y] = new Block(v,x,y);
+				Block block = new Block(v, x, y);
+				maze[x][y] = block;
+				blocks.add(block);
 			}
 	}
 

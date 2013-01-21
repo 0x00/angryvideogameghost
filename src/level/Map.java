@@ -31,6 +31,8 @@ public class Map {
 		pacman = new Pacman(Infos.ghostBitmap, this.map, this.food);
 		pacman.x = 1;
 		pacman.y = 1;
+		
+		pacman.avoid = ghost;
 
 		for (int y = 0; y < map.maze[0].length; y++) {
 			for (int x = 0; x < map.maze.length; x++) {

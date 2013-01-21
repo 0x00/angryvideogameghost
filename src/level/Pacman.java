@@ -5,6 +5,7 @@ import java.util.List;
 import map.Landscape;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class Pacman extends PathAI {
 	List<Food> food;
@@ -21,9 +22,12 @@ public class Pacman extends PathAI {
 
 	@Override
 	public void action(double delta) {
+		super.action(delta*1.02);
+		collisionHandling();
+		assignTarget();
+	}
 
-		super.action(delta);
-
+	private void collisionHandling() {
 		for (Food f : food) {
 
 			if (f.active && f.target != null && target != null
@@ -31,13 +35,12 @@ public class Pacman extends PathAI {
 				f.active = false;
 			}
 		}
-		assignTarget();
-
 	}
 
 	private void assignTarget() {
 		for (Food f : food) {
 			if (f.active) {
+				Log.d("new target", f.x + "," + f.y);
 				toX = f.x;
 				toY = f.y;
 				break;
