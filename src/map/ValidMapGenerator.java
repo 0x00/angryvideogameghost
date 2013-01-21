@@ -68,13 +68,13 @@ public class ValidMapGenerator {
 
 		System.out.println("Generator init");
 		while (!valid) {
-			map = new Landscape(w, h, 0.7);
+			map = new Landscape(w, h, 0.8);
 			round++;
 			System.out.println("next round #" + round);
 			map.dump();
 
 			System.out.println("generated. testing for plausibility..");
-			valid = check2(w / 2, h / 2);
+			valid = check(w / 2, h / 2);
 
 			if (!valid) {
 				System.out.println("not plausible next try");

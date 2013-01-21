@@ -9,8 +9,8 @@ import android.util.Log;
 
 public class PathAI extends Drawable {
 
-	public float toX = x;
-	public float toY = y;
+	public float toX = -1;
+	public float toY = -1;
 
 	Landscape landscape;
 
@@ -18,14 +18,18 @@ public class PathAI extends Drawable {
 	private Point localDirection;
 
 	public void action(double delta) {
+
+		if (toX == -1)
+			return;
+
 		int tx = (int) (x + 0.5);
 		int ty = (int) (y + 0.5);
 
 		int ttoX = (int) (toX + 0.5);
 		int ttoY = (int) (toY + 0.5);
 
-		if (Math.abs(tx - ttoX) < 1 && Math.abs(ty - ttoY) < 1) {
-			/* Log.d("path", "stop"); */
+		if (Math.abs(x - toX) < 0.1 && Math.abs(y - toY) < 0.1) {
+			 /*Log.d("path", "stop"); */
 		} else if (moving) {
 			Log.d("path", "direct movement");
 			move(delta);
@@ -60,13 +64,17 @@ public class PathAI extends Drawable {
 			dy = +1;
 		}
 
-		x += 0.2 * delta * dx;
-		y += 0.2 * delta * dy;
+		x += 0.1 * delta * dx;
+		y += 0.1 * delta * dy;
 
-		if (Math.abs(x - localDirection.x) < 0.5
-				&& Math.abs(y - localDirection.y) < 0.5) {
+		if (Math.abs(x - localDirection.x) <= 0.1)
 			x = localDirection.x;
+
+		if (Math.abs(y - localDirection.y) <= 0.1)
 			y = localDirection.y;
+
+		if (Math.abs(x - localDirection.x) <= 0.1
+				&& Math.abs(y - localDirection.y) <= 0.1) {
 			moving = false;
 		}
 	}

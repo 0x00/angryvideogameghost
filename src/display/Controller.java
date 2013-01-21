@@ -23,6 +23,7 @@ public class Controller extends Thread {
 
 			delta();
 			scr.map.ghost.action(delta);
+			scr.map.pacman.action(delta);
 			
 			Canvas c = null;
 			try {
