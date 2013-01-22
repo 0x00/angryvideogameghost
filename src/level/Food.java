@@ -7,13 +7,15 @@ import android.graphics.RectF;
 
 public class Food extends Drawable {
 
+	public boolean powerUp = Math.random() > 0.95 ? true : false;
+
 	public Food(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
 	public void draw(Canvas c) {
-		
+
 		if (!active)
 			return;
 
@@ -24,7 +26,8 @@ public class Food extends Drawable {
 
 		Paint paint = new Paint();
 		paint.setColor(Color.YELLOW);
-		c.drawCircle(X + sizeW / 2, Y + sizeH / 2, 2, paint);
+		int rad = powerUp? 5 : 2;
+		c.drawCircle(X + sizeW / 2, Y + sizeH / 2, rad, paint);
 	}
 
 }

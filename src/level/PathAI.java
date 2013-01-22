@@ -9,6 +9,7 @@ import map.Point;
 public class PathAI extends Drawable {
 
 	public Entity avoid;
+	public boolean avoidDanger = true;
 
 	public float toX = -1;
 	public float toY = -1;
@@ -19,7 +20,7 @@ public class PathAI extends Drawable {
 	Point localDirection;
 
 	public void action(double delta) {
-
+		
 		if (toX == -1)
 			return;
 
@@ -36,12 +37,13 @@ public class PathAI extends Drawable {
 
 		} else if (!moving) {
 			List<Point> path;
-			if (avoid == null) {
+			if (avoid == null || !avoidDanger) {
 				path = new Navi(landscape).findPath(tx, ty, ttoX, ttoY);
 			} else {
 
-				path = new Navi(landscape, (int) avoid.x, (int) avoid.y)
-						.findPath(tx, ty, ttoX, ttoY);
+				Navi nav = new Navi(landscape, (int) avoid.x, (int) avoid.y);
+				nav.avoider = 90;
+				path = nav.findPath(tx, ty, ttoX, ttoY);
 			}
 
 			if (path.size() > 0) {
@@ -68,8 +70,8 @@ public class PathAI extends Drawable {
 			dy = +1;
 		}
 
-		x += 0.1 * delta * dx;
-		y += 0.1 * delta * dy;
+		x += 0.2 * delta * dx;
+		y += 0.2 * delta * dy;
 
 		if (Math.abs(x - localDirection.x) <= 0.1)
 			x = localDirection.x;

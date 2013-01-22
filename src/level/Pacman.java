@@ -28,6 +28,8 @@ public class Pacman extends PathAI {
 	}
 
 	float frame = 1;
+	boolean powerUp = false;
+	float powerClock = 0;
 
 	@Override
 	public void draw(Canvas c) {
@@ -64,6 +66,13 @@ public class Pacman extends PathAI {
 	@Override
 	public void action(double delta) {
 		super.action(delta * 1.02);
+
+		powerClock -= delta * 0.1;
+		if (powerClock < 0){
+			powerUp = false;
+			avoidDanger = true;
+		}
+
 		frame += delta * 0.7;
 		collisionHandling();
 		assignTarget();
@@ -75,6 +84,11 @@ public class Pacman extends PathAI {
 			if (f.active && f.target != null && target != null
 					&& f.target.intersect(target)) {
 				f.active = false;
+				if(f.powerUp){
+					powerClock = 5;
+					powerUp = true;
+					avoidDanger = false;
+				}
 			}
 		}
 	}
@@ -82,6 +96,12 @@ public class Pacman extends PathAI {
 	Food targetFood;
 
 	private void assignTarget() {
+
+		if (powerUp) {
+			toX = avoid.x;
+			toY = avoid.y;
+			return;
+		}
 
 		if (distance(avoid) < 3)
 			targetFood = null;
@@ -105,7 +125,6 @@ public class Pacman extends PathAI {
 			}
 		});
 
-		
 		for (Food f : food) {
 			if (f.active) {
 				Log.d("new target", f.x + " " + f.y);
