@@ -83,6 +83,9 @@ public class Pacman extends PathAI {
 
 	private void assignTarget() {
 
+		if (distance(avoid) < 3)
+			targetFood = null;
+
 		if (targetFood != null && targetFood.active)
 			return;
 
@@ -91,20 +94,21 @@ public class Pacman extends PathAI {
 			@Override
 			public int compare(Food lhs, Food rhs) {
 
-				Point p1 = new Point((int)lhs.x, (int)lhs.y);
-				Point p2 = new Point((int)rhs.x, (int)rhs.y);
-				
-				Point avoider = new Point((int)avoid.x, (int)avoid.y);
+				Point p1 = new Point((int) lhs.x, (int) lhs.y);
+				Point p2 = new Point((int) rhs.x, (int) rhs.y);
+
+				Point avoider = new Point((int) avoid.x, (int) avoid.y);
 				double d1 = p1.distance(avoider);
 				double d2 = p2.distance(avoider);
-				
-				return (int) ((d2-d1)*10000);
+
+				return (int) ((d2 - d1) * 1000);
 			}
 		});
 
+		
 		for (Food f : food) {
 			if (f.active) {
-				Log.d("new target", f.x+" "+f.y);
+				Log.d("new target", f.x + " " + f.y);
 				toX = f.x;
 				toY = f.y;
 				targetFood = f;
