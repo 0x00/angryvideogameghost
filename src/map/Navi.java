@@ -11,6 +11,7 @@ public class Navi {
 	Landscape map;
 	int avoidX = -1;
 	int avoidY = -1;
+	public double avoider = 190;
 
 	public Navi(Landscape map) {
 		this.map = map;
@@ -36,35 +37,18 @@ public class Navi {
 				}
 
 				if (!painted) {
-					String item = map.maze[x][y].type == 0 ? "_" : "Q";
-					System.out.print(item);
+					if (x == avoidX && y == avoidY) {
+						System.out.print("X");
+					} else {
+						String item = map.maze[x][y].type == 0 ? "_" : "Q";
+						System.out.print(item);
+					}
 				}
 			}
 			System.out.println();
 		}
 	}
 
-	public class Point {
-		public int x;
-		public int y;
-		List<Point> path2 = new LinkedList<Point>();
-
-		public Point(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		@Override
-		public String toString() {
-			return x + "," + y;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			Point o = (Point) obj;
-			return x == o.x && y == o.y;
-		}
-	}
 
 	List<Point> visited = new ArrayList<Point>();
 	List<Point> todo = new ArrayList<Point>();
@@ -89,21 +73,27 @@ public class Navi {
 				todo.add(add);
 
 				Point p = new Point(add.x, add.y);
-				add.path2 = new ArrayList<Navi.Point>(actual.path2);
+				add.path2 = new ArrayList<Point>(actual.path2);
 				add.path2.add(p);
+				add.allcosts = actual.allcosts + 1;
 			}
 		}
 
-		Comparator<Point> distanceCompo = new Comparator<Navi.Point>() {
+		Comparator<Point> distanceCompo = new Comparator<Point>() {
 			@Override
 			public int compare(Point o1, Point o2) {
 
-				double d1 = Math.sqrt(Math.pow(o1.x - target.x, 2)
-						- Math.pow(o1.y - target.y, 2));
+				double d1 = o1.distance(target);
+				double d2 = o2.distance(target);
 
-				double d2 = Math.sqrt(Math.pow(o2.x - target.x, 2)
-						- Math.pow(o2.y - target.y, 2));
-				return (int) ((d1 - d2) * 1000);
+				if (avoidX != -1 && avoidY != -1) {
+					d1 += o1.allcosts + avoider
+							/ (o1.distance(new Point(avoidX, avoidY)) + 1);
+					d2 += o2.allcosts + avoider
+							/ (o2.distance(new Point(avoidX, avoidY)) + 1);
+				}
+
+				return (int) ((d1 - d2) * 10000);
 			}
 		};
 		Collections.sort(todo, distanceCompo);

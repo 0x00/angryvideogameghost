@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import map.Navi.Point;
-
 public class ValidMapGenerator {
 
 	public Landscape map;
 
 	boolean check2(int startX, int startY) {
-		
+
 		if (map.maze[startX][startY].type != 0)
 			return false;
 
@@ -20,8 +18,8 @@ public class ValidMapGenerator {
 			return false;
 		}
 
-		path = new Navi(map)
-				.findPath(0, 0, map.maze.length-1, map.maze[0].length-1);
+		path = new Navi(map).findPath(0, 0, map.maze.length - 1,
+				map.maze[0].length - 1);
 		if (path.size() == 0) {
 			return false;
 		}
@@ -68,7 +66,7 @@ public class ValidMapGenerator {
 
 		System.out.println("Generator init");
 		while (!valid) {
-			map = new Landscape(w, h, 0.8);
+			map = new Landscape(w, h, 0.9);
 			round++;
 			System.out.println("next round #" + round);
 			map.dump();

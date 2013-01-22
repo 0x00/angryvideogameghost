@@ -1,8 +1,11 @@
 package level;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import map.Landscape;
+import map.Point;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,7 +26,7 @@ public class Pacman extends PathAI {
 		this.landscape = landscape;
 		this.food = food;
 	}
-	
+
 	float frame = 1;
 
 	@Override
@@ -40,29 +43,28 @@ public class Pacman extends PathAI {
 		paint.setColor(Color.BLACK);
 
 		double fr = Math.abs(Math.sin(frame));
-		
-		int a = (int) (-45 + 45*fr);
+
+		int a = (int) (-45 + 45 * fr);
 		if (localDirection == null)
 			return;
-		
+
 		if (localDirection.x < x) {
-			a = (int) (135+45*fr);
+			a = (int) (135 + 45 * fr);
 		}
 		if (localDirection.y < y) {
-			a = (int) (-135+45*fr);
+			a = (int) (-135 + 45 * fr);
 		}
 		if (localDirection.y > y) {
-			a = (int) (45+45*fr);
+			a = (int) (45 + 45 * fr);
 		}
 
-		
-		c.drawArc(target, a, (float) (90-90*fr) , true, paint);
+		c.drawArc(target, a, (float) (90 - 90 * fr), true, paint);
 	}
 
 	@Override
 	public void action(double delta) {
 		super.action(delta * 1.02);
-		frame+=delta*0.7;
+		frame += delta * 0.7;
 		collisionHandling();
 		assignTarget();
 	}
@@ -77,11 +79,35 @@ public class Pacman extends PathAI {
 		}
 	}
 
+	Food targetFood;
+
 	private void assignTarget() {
+
+		if (targetFood != null && targetFood.active)
+			return;
+
+		Collections.sort(food, new Comparator<Food>() {
+
+			@Override
+			public int compare(Food lhs, Food rhs) {
+
+				Point p1 = new Point((int)lhs.x, (int)lhs.y);
+				Point p2 = new Point((int)rhs.x, (int)rhs.y);
+				
+				Point avoider = new Point((int)avoid.x, (int)avoid.y);
+				double d1 = p1.distance(avoider);
+				double d2 = p2.distance(avoider);
+				
+				return (int) ((d2-d1)*10000);
+			}
+		});
+
 		for (Food f : food) {
 			if (f.active) {
+				Log.d("new target", f.x+" "+f.y);
 				toX = f.x;
 				toY = f.y;
+				targetFood = f;
 				break;
 			}
 		}

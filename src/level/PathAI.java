@@ -4,7 +4,7 @@ import java.util.List;
 
 import map.Landscape;
 import map.Navi;
-import map.Navi.Point;
+import map.Point;
 
 public class PathAI extends Drawable {
 

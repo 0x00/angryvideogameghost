@@ -1,6 +1,5 @@
 package level;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,7 +42,6 @@ public class Map {
 				}
 			}
 		}
-		Collections.shuffle(this.food);
 	}
 
 	Block block = new Block(Infos.blockBitmap);
