@@ -11,6 +11,12 @@ import data.Infos;
 public class Map {
 	public Landscape map;
 
+	public enum States {
+		TITLE, GAME, PACMANKILLED, GAMEOVER, GHOSTKILLED
+	};
+
+	public States actual = States.TITLE;
+
 	public int transferX(float x) {
 		int X = map.maze.length;
 		return (int) (x * X);
@@ -21,7 +27,8 @@ public class Map {
 		return (int) (y * Y);
 	}
 
-	public Map() {
+	public void initGame() {
+		actual = States.TITLE;
 		map = new ValidMapGenerator(14, 20).map;
 		ghost = new Ghost(Infos.ghostBitmap, this.map);
 		ghost.x = 7;
@@ -30,8 +37,9 @@ public class Map {
 		pacman = new Pacman(Infos.ghostBitmap, this.map, this.food);
 		pacman.x = 1;
 		pacman.y = 1;
-		
+
 		pacman.avoid = ghost;
+		ghost.pacman = pacman;
 
 		for (int y = 0; y < map.maze[0].length; y++) {
 			for (int x = 0; x < map.maze.length; x++) {
@@ -42,6 +50,10 @@ public class Map {
 				}
 			}
 		}
+	}
+
+	public Map() {
+		initGame();
 	}
 
 	Block block = new Block(Infos.blockBitmap);
@@ -87,5 +99,11 @@ public class Map {
 		pacman.draw(c);
 		ghost.draw(c);
 
+	}
+
+	public void startGame() {
+		initGame();
+		actual = States.GAME;
+		ghost.autoplay = false;
 	}
 }

@@ -18,6 +18,7 @@ public class PathAI extends Drawable {
 
 	public boolean moving = false;
 	Point localDirection;
+	public double speed = 0.1;
 
 	public void action(double delta) {
 		
@@ -70,8 +71,8 @@ public class PathAI extends Drawable {
 			dy = +1;
 		}
 
-		x += 0.2 * delta * dx;
-		y += 0.2 * delta * dy;
+		x += speed  * delta * dx;
+		y += speed * delta * dy;
 
 		if (Math.abs(x - localDirection.x) <= 0.1)
 			x = localDirection.x;

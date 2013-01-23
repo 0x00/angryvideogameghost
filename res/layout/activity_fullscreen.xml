@@ -27,15 +27,12 @@
          android:fitsSystemWindows.
     -->
 
-    <display.Screen
-        android:id="@+id/screen1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+ 
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
+        <display.Screen
+            android:id="@+id/screen1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
@@ -56,6 +53,6 @@
                 android:text="@string/dummy_button" />
         </LinearLayout>
 
-    </FrameLayout>
+   
 
 </FrameLayout>

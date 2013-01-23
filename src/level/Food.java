@@ -26,7 +26,7 @@ public class Food extends Drawable {
 
 		Paint paint = new Paint();
 		paint.setColor(Color.YELLOW);
-		int rad = powerUp? 5 : 2;
+		int rad = powerUp? 7 : 2;
 		c.drawCircle(X + sizeW / 2, Y + sizeH / 2, rad, paint);
 	}
 
