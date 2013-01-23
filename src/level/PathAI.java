@@ -2,6 +2,8 @@ package level;
 
 import java.util.List;
 
+import android.util.Log;
+
 import map.Landscape;
 import map.Navi;
 import map.Point;
@@ -19,9 +21,10 @@ public class PathAI extends Drawable {
 	public boolean moving = false;
 	Point localDirection;
 	public double speed = 0.1;
+	public List<Point> path;
 
 	public void action(double delta) {
-		
+
 		if (toX == -1)
 			return;
 
@@ -37,7 +40,8 @@ public class PathAI extends Drawable {
 			move(delta);
 
 		} else if (!moving) {
-			List<Point> path;
+			Log.d("pathplan", "pathplan " + tx + " " + ty + ":=> " + ttoX + " "
+					+ ttoY);
 			if (avoid == null || !avoidDanger) {
 				path = new Navi(landscape).findPath(tx, ty, ttoX, ttoY);
 			} else {
@@ -71,7 +75,7 @@ public class PathAI extends Drawable {
 			dy = +1;
 		}
 
-		x += speed  * delta * dx;
+		x += speed * delta * dx;
 		y += speed * delta * dy;
 
 		if (Math.abs(x - localDirection.x) <= 0.1)

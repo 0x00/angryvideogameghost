@@ -17,7 +17,6 @@ import display.Screen;
 
 public class FullscreenActivity extends Activity {
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,14 +27,14 @@ public class FullscreenActivity extends Activity {
 		Infos.ghostBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ghosts);
 
+		Infos.blockWhiteBitmap = BitmapFactory.decodeResource(getResources(),
+				R.drawable.blockwhite);
+
 		Infos.score = new Score();
 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
-		getActionBar().hide();
-		
-		
+
 		OnTouchListener touch = new OnTouchListener() {
 
 			@Override
@@ -58,20 +57,33 @@ public class FullscreenActivity extends Activity {
 		setContentView(R.layout.activity_fullscreen);
 
 		final Screen screen = (Screen) findViewById(R.id.screen1);
-		
+
 		Button start = (Button) findViewById(R.id.dummy_button);
 		start.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+
+				hideActionBar();
+				v.setVisibility(View.GONE);
 				screen.map.startGame();
 				return false;
 			}
 		});
-		
+
 		screen.setOnTouchListener(touch);
 		screen.map.map.dump();
 		System.out.println();
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	void hideActionBar() {
+		getActionBar().hide();
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	void showActionBar() {
+		getActionBar().show();
 	}
 
 	@Override

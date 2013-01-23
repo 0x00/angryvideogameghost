@@ -2,6 +2,7 @@ package level;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -13,11 +14,15 @@ public class Block extends Drawable {
 			rect = new Rect(0, 0, gfx.getWidth(), gfx.getHeight());
 	}
 
-	public void draw(Canvas c) {
+	public void draw(Canvas c, int color) {
 		float X = x * c.getWidth();
 		float Y = y * c.getHeight();
 		target = new RectF(X, Y, X + sizeW, Y + sizeH);
 
-		c.drawBitmap(gfx, rect, target, null);
+		Paint paint = new Paint();
+		paint.setColor(color);
+
+		c.drawBitmap(gfx, rect, target, paint);
+		
 	}
 }

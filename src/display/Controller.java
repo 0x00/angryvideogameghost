@@ -22,6 +22,7 @@ public class Controller extends Thread {
 		while (alive) {
 
 			delta();
+			scr.map.action(delta);
 			scr.map.ghost.action(delta);
 			scr.map.pacman.action(delta);
 			
@@ -31,7 +32,11 @@ public class Controller extends Thread {
 				synchronized (scr.getHolder()) {
 					if (c != null) {
 						/* insert voodoo background calculations here */
-						draw(c);
+						try {
+							draw(c);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			} finally {

@@ -30,6 +30,7 @@ public class Pacman extends PathAI {
 	float frame = 1;
 	boolean powerUp = false;
 	float powerClock = 0;
+	private boolean debug = true;
 
 	@Override
 	public void draw(Canvas c) {
@@ -61,6 +62,21 @@ public class Pacman extends PathAI {
 		}
 
 		c.drawArc(target, a, (float) (90 - 90 * fr), true, paint);
+
+		if (debug) {
+			paint.setColor(Color.rgb(255, 0, 0));
+			RectF re = new RectF(toX * sizeW, toY * sizeH, toX * sizeW + sizeW,
+					toY * sizeH + sizeH);
+			c.drawRect(re, paint);
+			
+			if(path==null) return;
+			for(Point p : path){
+				paint.setColor(Color.rgb(0, 255, 0));
+				re = new RectF(p.x * sizeW+10, p.y * sizeH+10, p.x * sizeW + sizeW-10,
+						p.y * sizeH + sizeH-10);
+				c.drawRect(re, paint);
+			}
+		}
 	}
 
 	@Override
@@ -68,7 +84,7 @@ public class Pacman extends PathAI {
 		super.action(delta * 1.02);
 
 		powerClock -= delta * 0.1;
-		if (powerClock < 0){
+		if (powerClock < 0) {
 			powerUp = false;
 			avoidDanger = true;
 			speed = 0.14;
@@ -85,7 +101,7 @@ public class Pacman extends PathAI {
 			if (f.active && f.target != null && target != null
 					&& f.target.intersect(target)) {
 				f.active = false;
-				if(f.powerUp){
+				if (f.powerUp) {
 					powerClock = 8;
 					powerUp = true;
 					avoidDanger = false;

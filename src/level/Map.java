@@ -6,6 +6,8 @@ import java.util.List;
 import map.Landscape;
 import map.ValidMapGenerator;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.util.Log;
 import data.Infos;
 
 public class Map {
@@ -28,6 +30,9 @@ public class Map {
 	}
 
 	public void initGame() {
+
+		food.clear();
+
 		actual = States.TITLE;
 		map = new ValidMapGenerator(14, 20).map;
 		ghost = new Ghost(Infos.ghostBitmap, this.map);
@@ -53,9 +58,14 @@ public class Map {
 	}
 
 	public Map() {
-		initGame();
+		try {
+			initGame();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
+	Block blockW = new Block(Infos.blockWhiteBitmap);
 	Block block = new Block(Infos.blockBitmap);
 
 	/* this is the Player */
@@ -63,6 +73,8 @@ public class Map {
 	public List<Food> food = new LinkedList<Food>();
 	public Pacman pacman;
 
+	public float frame = 0;
+	
 	public void draw(Canvas c) {
 
 		float w = c.getWidth();
@@ -73,20 +85,33 @@ public class Map {
 
 		block.sizeW = w / mapW;
 		block.sizeH = h / mapH;
+		blockW.sizeW = w / mapW;
+		blockW.sizeH = h / mapH;
 
 		ghost.sizeW = block.sizeW;
 		ghost.sizeH = block.sizeH;
 		pacman.sizeW = block.sizeW;
 		pacman.sizeH = block.sizeH;
 
+		int color = Color.WHITE;
+
 		for (int y = 0; y < map.maze[0].length; y++) {
 
 			for (int x = 0; x < map.maze.length; x++) {
 				boolean oo = map.maze[x][y].type > 0 ? true : false;
+
+				if (pacman.powerUp && ((int)frame)%2==0) {
+					blockW.x = x / mapW;
+					blockW.y = y / mapH;
+					if (oo)
+						blockW.draw(c, color);
+					continue;
+				}
+
 				block.x = x / mapW;
 				block.y = y / mapH;
 				if (oo)
-					block.draw(c);
+					block.draw(c, color);
 			}
 		}
 
@@ -105,5 +130,9 @@ public class Map {
 		initGame();
 		actual = States.GAME;
 		ghost.autoplay = false;
+	}
+
+	public void action(double delta) {
+		frame += delta*0.1;	
 	}
 }
