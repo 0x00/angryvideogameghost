@@ -7,6 +7,7 @@ import map.Landscape;
 import map.ValidMapGenerator;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import data.Infos;
 
 public class Game {
@@ -73,7 +74,11 @@ public class Game {
 	public Pacman pacman;
 
 	public float frame = 0;
-	
+
+	Paint p = new Paint();
+
+	long pills = 0;
+
 	public void draw(Canvas c) {
 
 		float w = c.getWidth();
@@ -99,7 +104,7 @@ public class Game {
 			for (int x = 0; x < map.maze.length; x++) {
 				boolean oo = map.maze[x][y].type > 0 ? true : false;
 
-				if (pacman.powerUp && ((int)frame)%2==0) {
+				if (pacman.powerUp && ((int) frame) % 2 == 0) {
 					blockW.x = x / mapW;
 					blockW.y = y / mapH;
 					if (oo)
@@ -114,14 +119,23 @@ public class Game {
 			}
 		}
 
+		pills = 0;
 		for (Food f : food) {
 			f.sizeW = block.sizeW;
 			f.sizeH = block.sizeH;
 			f.draw(c);
+			if (f.active)
+				pills++;
 		}
 
 		pacman.draw(c);
 		ghost.draw(c);
+
+		if (actual != States.GAME)
+			return;
+		p.setColor(Color.rgb(255, 255, 255));
+		p.setTextSize(20);
+		c.drawText("Pills: " + pills, 10, 30, p);
 
 	}
 
@@ -132,6 +146,7 @@ public class Game {
 	}
 
 	public void action(double delta) {
-		frame += delta*0.1;	
+		frame += delta * 0.1;
+
 	}
 }
