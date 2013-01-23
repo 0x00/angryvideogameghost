@@ -1,6 +1,6 @@
 package display;
 
-import level.Map;
+import level.Game;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -10,7 +10,7 @@ public class Screen extends SurfaceView implements SurfaceHolder.Callback {
 
 	Controller controller;
 
-	public Map map = new Map();
+	public Game map = new Game();
 
 	public Screen(Context context, AttributeSet attrs) {
 		super(context, attrs);
