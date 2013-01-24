@@ -63,7 +63,6 @@ public class FullscreenActivity extends Activity {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
 				hideActionBar();
 				v.setVisibility(View.GONE);
 				screen.map.startGame();

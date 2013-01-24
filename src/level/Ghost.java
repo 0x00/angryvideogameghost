@@ -26,7 +26,7 @@ public class Ghost extends PathAI {
 	@Override
 	public void action(double delta) {
 		super.action(delta);
-
+		
 		if (!autoplay)
 			return;
 

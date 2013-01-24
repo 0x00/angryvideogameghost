@@ -18,6 +18,7 @@ public class Game {
 	};
 
 	public States actual = States.TITLE;
+	boolean busy;
 
 	public int transferX(float x) {
 		int X = map.maze.length;
@@ -33,6 +34,7 @@ public class Game {
 
 		food.clear();
 
+		busy = false;
 		actual = States.TITLE;
 		map = new ValidMapGenerator(14, 20).map;
 		ghost = new Ghost(Infos.ghostBitmap, this.map);
@@ -128,6 +130,18 @@ public class Game {
 				pills++;
 		}
 
+		if (actual == States.GHOSTKILLED) {
+			return;
+		}
+
+		if (actual == States.PACMANKILLED) {
+			return;
+		}
+
+		if (actual == States.GAMEOVER) {
+			return;
+		}
+
 		pacman.draw(c);
 		ghost.draw(c);
 
@@ -147,6 +161,37 @@ public class Game {
 
 	public void action(double delta) {
 		frame += delta * 0.1;
+
+		if (ghost == null || ghost.target == null || pacman == null
+				|| pacman.target == null)
+			return;
+
+		if (ghost.target.intersect(pacman.target) && !busy) {
+
+			if(actual == States.TITLE){
+				initGame();
+				return;
+			}
+			
+			if (pacman.powerUp) {
+				actual = States.GHOSTKILLED;
+				frame = 0;
+				busy = true;
+			}
+
+			if (!pacman.powerUp) {
+				actual = States.PACMANKILLED;
+				frame = 0;
+				busy = true;
+			}
+			
+		}
+
+		if (busy) {
+			if (frame > 10) {
+				startGame();
+			}
+		}
 
 	}
 }

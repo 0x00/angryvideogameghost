@@ -105,7 +105,7 @@ public class Pacman extends PathAI {
 					powerClock = 8;
 					powerUp = true;
 					avoidDanger = false;
-					speed = 0.1;
+					speed = 0.11;
 				}
 			}
 		}
@@ -118,6 +118,7 @@ public class Pacman extends PathAI {
 		if (powerUp) {
 			toX = avoid.x;
 			toY = avoid.y;
+			targetFood = null;
 			return;
 		}
 
