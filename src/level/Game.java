@@ -1,5 +1,7 @@
 package level;
 
+import game.pachunter.FullscreenActivity;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,6 +82,7 @@ public class Game {
 	Paint p = new Paint();
 
 	long pills = 0;
+	public FullscreenActivity activity;
 
 	public void draw(Canvas c) {
 
@@ -168,11 +171,11 @@ public class Game {
 
 		if (ghost.target.intersect(pacman.target) && !busy) {
 
-			if(actual == States.TITLE){
+			if (actual == States.TITLE) {
 				initGame();
 				return;
 			}
-			
+
 			if (pacman.powerUp) {
 				actual = States.GHOSTKILLED;
 				frame = 0;
@@ -184,12 +187,18 @@ public class Game {
 				frame = 0;
 				busy = true;
 			}
-			
+
 		}
 
 		if (busy) {
 			if (frame > 10) {
-				startGame();
+				// startGame();
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						activity.showUI();
+					}
+				});
 			}
 		}
 

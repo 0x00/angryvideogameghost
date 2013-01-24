@@ -31,7 +31,7 @@ public class Pacman extends PathAI {
 	float frame = 1;
 	boolean powerUp = false;
 	float powerClock = 0;
-	private boolean debug = true;
+	private boolean debug = false;
 
 	@Override
 	public void draw(Canvas c) {

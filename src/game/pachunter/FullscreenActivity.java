@@ -17,6 +17,9 @@ import display.Screen;
 
 public class FullscreenActivity extends Activity {
 
+	Screen screen;
+	Button start;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,23 +59,34 @@ public class FullscreenActivity extends Activity {
 
 		setContentView(R.layout.activity_fullscreen);
 
-		final Screen screen = (Screen) findViewById(R.id.screen1);
+		screen = (Screen) findViewById(R.id.screen1);
 
-		Button start = (Button) findViewById(R.id.dummy_button);
+		start = (Button) findViewById(R.id.dummy_button);
 		start.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				hideActionBar();
-				v.setVisibility(View.GONE);
-				screen.map.startGame();
+				hideUI();
 				return false;
 			}
+
 		});
 
 		screen.setOnTouchListener(touch);
 		screen.map.map.dump();
+		screen.map.activity = this;
 		System.out.println();
+	}
+
+	public void hideUI() {
+		hideActionBar();
+		start.setVisibility(View.GONE);
+		screen.map.startGame();
+	}
+	public void showUI() {
+		showActionBar();
+		start.setVisibility(View.VISIBLE);
+		screen.map.initGame();
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
