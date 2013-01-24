@@ -7,20 +7,22 @@ import java.util.List;
 public class ValidMapGenerator {
 
 	public Landscape map;
+	private Navi navi;
 
 	boolean check2(int startX, int startY) {
 
 		if (map.maze[startX][startY].type != 0)
 			return false;
 
-		List<Point> path = new Navi(map).findPath(startX, startY, 0, 0);
-		if (path.size() == 0) {
+		List<Point> path = new Navi(map).findPath(new Point(startX, startY),
+				new Point(0, 0), null);
+		if (path.size() <= 1) {
 			return false;
 		}
 
-		path = new Navi(map).findPath(0, 0, map.maze.length - 1,
-				map.maze[0].length - 1);
-		if (path.size() == 0) {
+		path = new Navi(map).findPath(new Point(0, 0), new Point(
+				map.maze.length - 1, map.maze[0].length - 1), null);
+		if (path.size() <= 1) {
 			return false;
 		}
 
@@ -42,9 +44,9 @@ public class ValidMapGenerator {
 				if (valid) {
 					Block m = map.maze[x][y];
 					if (m.type == 0) {
-						List<Point> path = new Navi(map).findPath(startX,
-								startY, x, y);
-						if (path.size() == 0) {
+						List<Point> path = navi.findPath(new Point(startX,
+								startY), new Point(x, y), null);
+						if (path.size() <= 1) {
 							valid = false;
 							break;
 						}
@@ -66,7 +68,8 @@ public class ValidMapGenerator {
 
 		System.out.println("Generator init");
 		while (!valid) {
-			map = new Landscape(w, h, 0.9);
+			map = new Landscape(w, h, 0.8);
+			navi = new Navi(map);
 			round++;
 			System.out.println("next round #" + round);
 			map.dump();

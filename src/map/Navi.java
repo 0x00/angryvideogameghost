@@ -9,18 +9,11 @@ import java.util.List;
 public class Navi {
 
 	Landscape map;
-	int avoidX = -1;
-	int avoidY = -1;
+	Point avoid;
 	public double avoider = 190;
 
 	public Navi(Landscape map) {
 		this.map = map;
-	}
-
-	public Navi(Landscape map, int avoidX, int avoidY) {
-		this.map = map;
-		this.avoidX = avoidX;
-		this.avoidY = avoidY;
 	}
 
 	public void dumpPath() {
@@ -29,7 +22,7 @@ public class Navi {
 			for (int x = 0; x < map.maze.length; x++) {
 
 				boolean painted = false;
-				for (Point p : path2) {
+				for (Point p : path) {
 					if (p.x == x && p.y == y && !painted) {
 						System.out.print("@");
 						painted = true;
@@ -37,7 +30,7 @@ public class Navi {
 				}
 
 				if (!painted) {
-					if (x == avoidX && y == avoidY) {
+					if (avoid != null && x == avoid.x && y == avoid.y) {
 						System.out.print("X");
 					} else {
 						String item = map.maze[x][y].type == 0 ? "_" : "Q";
@@ -49,21 +42,20 @@ public class Navi {
 		}
 	}
 
-
-	List<Point> visited = new ArrayList<Point>();
-	List<Point> todo = new ArrayList<Point>();
-	List<Point> path2 = new LinkedList<Point>();
+	List<Point> visited;
+	List<Point> todo;
+	List<Point> path;
 
 	double distance(Point a, Point b) {
 		return Math.sqrt(Math.pow(a.x - b.x, 2) - Math.pow(a.y - b.y, 2));
 	}
 
-	void add(Point add, Point actual, String dir, final Point target) {
+	void add(Point add, Point actual) {
 
 		if (todo.contains(add) || visited.contains(add))
 			return;
 
-		if (avoidX == add.x && avoidY == add.y)
+		if (avoid != null && avoid.x == add.x && avoid.y == add.y)
 			return;
 
 		if (add.x >= 0 && add.x < map.maze.length && add.y >= 0
@@ -73,58 +65,79 @@ public class Navi {
 				todo.add(add);
 
 				Point p = new Point(add.x, add.y);
-				add.path2 = new ArrayList<Point>(actual.path2);
-				add.path2.add(p);
+
+				if (actual.history.size() == 0) {
+					actual.history.add(actual);
+				}
+
+				add.history = new ArrayList<Point>(actual.history);
+				add.history.add(p);
 				add.allcosts = actual.allcosts + 1;
 			}
 		}
 
-		Comparator<Point> distanceCompo = new Comparator<Point>() {
-			@Override
-			public int compare(Point o1, Point o2) {
-
-				double d1 = o1.distance(target);
-				double d2 = o2.distance(target);
-
-				if (avoidX != -1 && avoidY != -1) {
-					d1 += o1.allcosts + avoider
-							/ (o1.distance(new Point(avoidX, avoidY)) + 1);
-					d2 += o2.allcosts + avoider
-							/ (o2.distance(new Point(avoidX, avoidY)) + 1);
-				}
-
-				return (int) ((d1 - d2) * 10000);
-			}
-		};
 		Collections.sort(todo, distanceCompo);
 	}
 
-	boolean found = false;
+	Comparator<Point> distanceCompo = new Comparator<Point>() {
+		@Override
+		public int compare(Point o1, Point o2) {
 
-	void expand(Point target) {
+			double d1 = o1.distance(target);
+			double d2 = o2.distance(target);
+
+			if (avoid != null) {
+				d1 += o1.allcosts + avoider / (o1.distance(avoid) + 1);
+				d2 += o2.allcosts + avoider / (o2.distance(avoid) + 1);
+			}
+
+			return (int) ((d1 - d2) * 10000);
+		}
+	};
+
+	boolean found = false;
+	private Point target;
+
+	void expand() {
 		Point here = todo.get(0);
 
 		todo.remove(here);
 		visited.add(here);
 
 		if (here.equals(target)) {
-			path2 = here.path2;
+			path = here.history;
 			found = true;
 			return;
 		}
 
-		add(new Point(here.x - 1, here.y), here, "w", target);
-		add(new Point(here.x + 1, here.y), here, "e", target);
-		add(new Point(here.x, here.y - 1), here, "n", target);
-		add(new Point(here.x, here.y + 1), here, "s", target);
+		add(new Point(here.x - 1, here.y), here);
+		add(new Point(here.x + 1, here.y), here);
+		add(new Point(here.x, here.y - 1), here);
+		add(new Point(here.x, here.y + 1), here);
 
 	}
 
-	public List<Point> findPath(int x, int y, int tx, int ty) {
-		todo.add(new Point(x, y));
-		while (todo.size() > 0 && !found) {
-			expand(new Point(tx, ty));
+	public List<Point> findPath(Point from, Point to, Point avoid) {
+
+		if (path != null && path.contains(from) && path.contains(to)) {
+			int idx = path.indexOf(from);
+			return path.subList(idx, path.size());
 		}
-		return path2;
+
+		this.target = to;
+		this.avoid = avoid;
+
+		this.found = false;
+
+		this.visited = new ArrayList<Point>();
+		this.todo = new ArrayList<Point>();
+		this.path = new LinkedList<Point>();
+
+		this.todo.add(from);
+
+		while (todo.size() > 0 && !found) {
+			expand();
+		}
+		return path;
 	}
 }

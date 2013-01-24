@@ -18,12 +18,13 @@ public class Pacman extends PathAI {
 	List<Food> food;
 
 	public Pacman(Bitmap gfx, Landscape landscape, List<Food> food) {
+		super(landscape);
+		
 		this.gfx = gfx;
 		border = 3;
 		if (this.gfx != null)
 			rect = new Rect(0, 0, gfx.getWidth(), gfx.getHeight());
 
-		this.landscape = landscape;
 		this.food = food;
 	}
 

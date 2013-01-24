@@ -13,12 +13,12 @@ public class Ghost extends PathAI {
 	public Pacman pacman;
 
 	public Ghost(Bitmap gfx, Landscape landscape) {
+		super(landscape);
+		
 		this.gfx = gfx;
 		border = 3;
 		if (this.gfx != null)
 			rect = new Rect(0, 0, gfx.getWidth(), gfx.getHeight());
-
-		this.landscape = landscape;
 	}
 
 	boolean autoplay = true;

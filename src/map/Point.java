@@ -8,7 +8,7 @@ public class Point {
 	public int x;
 	public int y;
 	public int allcosts;
-	List<Point> path2 = new LinkedList<Point>();
+	List<Point> history = new LinkedList<Point>();
 
 	public Point(int x, int y) {
 		this.x = x;

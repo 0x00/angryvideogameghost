@@ -17,6 +17,12 @@ public class PathAI extends Drawable {
 	public float toY = -1;
 
 	Landscape landscape;
+	Navi nav;
+
+	public PathAI(Landscape landscape) {
+		nav = new Navi(landscape);
+		this.landscape = landscape;
+	}
 
 	public boolean moving = false;
 	Point localDirection;
@@ -43,16 +49,16 @@ public class PathAI extends Drawable {
 			Log.d("pathplan", "pathplan " + tx + " " + ty + ":=> " + ttoX + " "
 					+ ttoY);
 			if (avoid == null || !avoidDanger) {
-				path = new Navi(landscape).findPath(tx, ty, ttoX, ttoY);
+				path = nav.findPath(new Point(tx, ty), new Point(ttoX, ttoY),
+						null);
 			} else {
-
-				Navi nav = new Navi(landscape, (int) avoid.x, (int) avoid.y);
 				nav.avoider = 90;
-				path = nav.findPath(tx, ty, ttoX, ttoY);
+				path = nav.findPath(new Point(tx, ty), new Point(ttoX, ttoY),
+						new Point((int) avoid.x, (int) avoid.y));
 			}
 
-			if (path.size() > 0) {
-				Point direction = path.get(0);
+			if (path.size() > 1) {
+				Point direction = path.get(1);
 				moveTo(direction, delta);
 			}
 		}
