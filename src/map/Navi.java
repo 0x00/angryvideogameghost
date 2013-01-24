@@ -44,7 +44,7 @@ public class Navi {
 
 	List<Point> visited;
 	List<Point> todo;
-	List<Point> path;
+	public List<Point> path;
 
 	double distance(Point a, Point b) {
 		return Math.sqrt(Math.pow(a.x - b.x, 2) - Math.pow(a.y - b.y, 2));

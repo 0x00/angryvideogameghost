@@ -19,7 +19,7 @@ public class Pacman extends PathAI {
 
 	public Pacman(Bitmap gfx, Landscape landscape, List<Food> food) {
 		super(landscape);
-		
+
 		this.gfx = gfx;
 		border = 3;
 		if (this.gfx != null)
@@ -32,6 +32,8 @@ public class Pacman extends PathAI {
 	boolean powerUp = false;
 	float powerClock = 0;
 	private boolean debug = false;
+
+	int a;
 
 	@Override
 	public void draw(Canvas c) {
@@ -48,9 +50,12 @@ public class Pacman extends PathAI {
 
 		double fr = Math.abs(Math.sin(frame));
 
-		int a = (int) (-45 + 45 * fr);
 		if (localDirection == null)
 			return;
+
+		if (localDirection.x > x) {
+			a = (int) (-45 + 45 * fr);
+		}
 
 		if (localDirection.x < x) {
 			a = (int) (135 + 45 * fr);
@@ -69,12 +74,13 @@ public class Pacman extends PathAI {
 			RectF re = new RectF(toX * sizeW, toY * sizeH, toX * sizeW + sizeW,
 					toY * sizeH + sizeH);
 			c.drawRect(re, paint);
-			
-			if(path==null) return;
-			for(Point p : path){
+
+			if (path == null)
+				return;
+			for (Point p : path) {
 				paint.setColor(Color.rgb(0, 255, 0));
-				re = new RectF(p.x * sizeW+10, p.y * sizeH+10, p.x * sizeW + sizeW-10,
-						p.y * sizeH + sizeH-10);
+				re = new RectF(p.x * sizeW + 10, p.y * sizeH + 10, p.x * sizeW
+						+ sizeW - 10, p.y * sizeH + sizeH - 10);
 				c.drawRect(re, paint);
 			}
 		}
@@ -107,6 +113,7 @@ public class Pacman extends PathAI {
 					powerUp = true;
 					avoidDanger = false;
 					speed = 0.11;
+					nav.path.clear();
 				}
 			}
 		}
