@@ -10,10 +10,13 @@ import map.ValidMapGenerator;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import data.Infos;
 
 public class Game {
 	public Landscape map;
+
+	public boolean active = false;
 
 	public enum States {
 		TITLE, GAME, PACMANKILLED, GAMEOVER, GHOSTKILLED
@@ -34,6 +37,7 @@ public class Game {
 
 	public void initGame() {
 
+		active = false;
 		food.clear();
 
 		busy = false;
@@ -50,15 +54,27 @@ public class Game {
 		pacman.avoid = ghost;
 		ghost.pacman = pacman;
 
+		pacman.speed = 0.2;
+		ghost.speed = 0.18;
+
 		for (int y = 0; y < map.maze[0].length; y++) {
 			for (int x = 0; x < map.maze.length; x++) {
 				if (map.maze[x][y].type == 0) {
+
+					if (x >= map.maze.length / 2 - 2
+							&& x < map.maze.length / 2 + 2
+							&& y >= map.maze[0].length / 2 - 2
+							&& y < map.maze[0].length / 2 + 2) {
+						continue;
+					}
 					Food f = new Food(x, y);
 					food.add(f);
 					f.border = 15;
+
 				}
 			}
 		}
+		active = true;
 	}
 
 	public Game() {
@@ -85,6 +101,21 @@ public class Game {
 	public FullscreenActivity activity;
 
 	public void draw(Canvas c) {
+
+		if (!active){
+			c.drawColor(Color.BLACK);
+			p.setColor(Color.WHITE);
+			
+			p.setTextSize(30);
+			
+			String text = "wait while computing..";
+			Rect bound = new Rect();
+			p.getTextBounds(text, 0,text.length(), bound);
+			
+			c.drawText(text, c.getWidth()/2-bound.width()/2, c.getHeight()/2-bound.height()/2, p);
+			
+			return;
+		}
 
 		float w = c.getWidth();
 		float h = c.getHeight();
@@ -158,6 +189,10 @@ public class Game {
 
 	public void startGame() {
 		initGame();
+
+		pacman.speed = 0.14;
+		ghost.speed = 0.14;
+
 		actual = States.GAME;
 		ghost.autoplay = false;
 	}

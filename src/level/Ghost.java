@@ -6,27 +6,56 @@ import java.util.Comparator;
 import map.Landscape;
 import map.Point;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class Ghost extends PathAI {
 
 	public Pacman pacman;
+	int offset = 0;
 
 	public Ghost(Bitmap gfx, Landscape landscape) {
 		super(landscape);
-		
 		this.gfx = gfx;
+		
 		border = 3;
 		if (this.gfx != null)
-			rect = new Rect(0, 0, gfx.getWidth(), gfx.getHeight());
+			rect = new Rect(0, 0, gfx.getWidth() / 5, gfx.getHeight());
 	}
+	
 
 	boolean autoplay = true;
 
 	@Override
+	public void draw(Canvas c) {
+
+		if (localDirection != null) {
+			if (localDirection.x < x)
+				offset = 0;
+
+			if (localDirection.x > x)
+				offset = 2;
+
+			if (localDirection.y < y)
+				offset = 1;
+
+			if (localDirection.y > y)
+				offset = 3;
+
+			if (pacman.powerUp) {
+				offset = 4;
+			}
+		}
+
+		this.rect = new Rect(offset * gfx.getWidth() / 5, 0, offset
+				* gfx.getWidth() / 5 + gfx.getWidth() / 5, gfx.getHeight());
+		super.draw(c);
+	}
+
+	@Override
 	public void action(double delta) {
 		super.action(delta);
-		
+
 		if (!autoplay)
 			return;
 

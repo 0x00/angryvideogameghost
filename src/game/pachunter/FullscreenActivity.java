@@ -19,7 +19,7 @@ public class FullscreenActivity extends Activity {
 
 	Screen screen;
 	Button start;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,6 +29,8 @@ public class FullscreenActivity extends Activity {
 
 		Infos.ghostBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ghosts);
+
+		// Infos.ghostBitmap = BitmapHelper.changeHue(Infos.ghostBitmap, -0.3);
 
 		Infos.blockWhiteBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.blockwhite);
@@ -66,7 +68,8 @@ public class FullscreenActivity extends Activity {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				hideUI();
+				if (event.getAction() == MotionEvent.ACTION_UP)
+					hideUI();
 				return false;
 			}
 
@@ -83,6 +86,7 @@ public class FullscreenActivity extends Activity {
 		start.setVisibility(View.GONE);
 		screen.map.startGame();
 	}
+
 	public void showUI() {
 		showActionBar();
 		start.setVisibility(View.VISIBLE);

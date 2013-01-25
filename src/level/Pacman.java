@@ -94,7 +94,6 @@ public class Pacman extends PathAI {
 		if (powerClock < 0) {
 			powerUp = false;
 			avoidDanger = true;
-			speed = 0.14;
 		}
 
 		frame += delta * 0.7;
@@ -112,7 +111,6 @@ public class Pacman extends PathAI {
 					powerClock = 8;
 					powerUp = true;
 					avoidDanger = false;
-					speed = 0.11;
 					nav.path.clear();
 				}
 			}
