@@ -84,11 +84,17 @@ public class Ghost extends PathAI {
 					Point avoider = new Point((int) pacman.x, (int) pacman.y);
 					double d1 = p1.distance(avoider);
 					double d2 = p2.distance(avoider);
+					if(lhs.type!=0){
+						d1 = 0;
+					}
+					if(rhs.type!=0){
+						d2 = 0;
+					}
 
 					return (int) ((d2 - d1) * 1000);
 				}
 			});
-
+			
 			avoid = pacman;
 			avoidDanger = true;
 			toX = landscape.blocks.get(0).x;

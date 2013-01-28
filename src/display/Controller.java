@@ -22,27 +22,27 @@ public class Controller extends Thread {
 		while (alive) {
 
 			delta();
-			scr.map.action(delta);
-			scr.map.ghost.action(delta);
-			scr.map.pacman.action(delta);
 			
+			try{
+			scr.map.action(delta);
+			
+
 			Canvas c = null;
 			try {
 				c = scr.getHolder().lockCanvas();
 				synchronized (scr.getHolder()) {
 					if (c != null) {
 						/* insert voodoo background calculations here */
-						try {
-							draw(c);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+						draw(c);
 					}
 				}
 			} finally {
 				if (c != null) {
 					scr.getHolder().unlockCanvasAndPost(c);
 				}
+			}
+			} catch (Exception e) {
+
 			}
 		}
 	}

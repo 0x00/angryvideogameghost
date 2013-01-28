@@ -35,7 +35,7 @@ public class Game {
 		return (int) (y * Y);
 	}
 
-	public void initGame() {
+	public synchronized void initGame() {
 
 		active = false;
 		food.clear();
@@ -102,18 +102,19 @@ public class Game {
 
 	public void draw(Canvas c) {
 
-		if (!active){
+		if (!active) {
 			c.drawColor(Color.BLACK);
 			p.setColor(Color.WHITE);
-			
+
 			p.setTextSize(30);
-			
+
 			String text = "wait while computing..";
 			Rect bound = new Rect();
-			p.getTextBounds(text, 0,text.length(), bound);
-			
-			c.drawText(text, c.getWidth()/2-bound.width()/2, c.getHeight()/2-bound.height()/2, p);
-			
+			p.getTextBounds(text, 0, text.length(), bound);
+
+			c.drawText(text, c.getWidth() / 2 - bound.width() / 2,
+					c.getHeight() / 2 - bound.height() / 2, p);
+
 			return;
 		}
 
@@ -187,7 +188,7 @@ public class Game {
 
 	}
 
-	public void startGame() {
+	public synchronized void startGame() {
 		initGame();
 
 		pacman.speed = 0.14;
@@ -237,5 +238,7 @@ public class Game {
 			}
 		}
 
+		ghost.action(delta);
+		pacman.action(delta);
 	}
 }
