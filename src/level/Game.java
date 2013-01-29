@@ -165,9 +165,6 @@ public class Game {
 				pills++;
 		}
 
-		if (actual == States.GHOSTKILLED) {
-			return;
-		}
 
 		if (actual == States.PACMANKILLED) {
 			return;
@@ -180,6 +177,10 @@ public class Game {
 		pacman.draw(c);
 		ghost.draw(c);
 
+		if (actual == States.GHOSTKILLED) {
+			return;
+		}
+		
 		if (actual != States.GAME)
 			return;
 		p.setColor(Color.rgb(255, 255, 255));
@@ -207,7 +208,7 @@ public class Game {
 
 		if (ghost.target.intersect(pacman.target) && !busy) {
 
-			if (actual == States.TITLE) {
+			if (actual == States.TITLE && !pacman.powerUp) {
 				initGame();
 				return;
 			}
@@ -215,10 +216,9 @@ public class Game {
 			if (pacman.powerUp) {
 				actual = States.GHOSTKILLED;
 				frame = 0;
+				pacman.powerUp = false;
 				busy = true;
-			}
-
-			if (!pacman.powerUp) {
+			}else if (!pacman.powerUp) {
 				actual = States.PACMANKILLED;
 				frame = 0;
 				busy = true;
@@ -227,7 +227,23 @@ public class Game {
 		}
 
 		if (busy) {
-			if (frame > 10) {
+
+			if (actual == States.GHOSTKILLED) {
+
+				ghost.toX = map.maze.length / 2;
+				ghost.toY = map.maze[0].length / 2;
+				ghost.avoidDanger = false;
+				ghost.showpath = true;
+
+				if (ghost.toX == ghost.x && ghost.toY == ghost.y) {
+					actual = States.GAME;
+					busy = false;
+					ghost.showpath = false;
+				}
+
+			}
+
+			if (frame > 10 && actual == States.PACMANKILLED) {
 				// startGame();
 				activity.runOnUiThread(new Runnable() {
 					@Override

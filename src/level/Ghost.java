@@ -7,6 +7,8 @@ import map.Landscape;
 import map.Point;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class Ghost extends PathAI {
@@ -17,14 +19,14 @@ public class Ghost extends PathAI {
 	public Ghost(Bitmap gfx, Landscape landscape) {
 		super(landscape);
 		this.gfx = gfx;
-		
+
 		border = 3;
 		if (this.gfx != null)
 			rect = new Rect(0, 0, gfx.getWidth() / 5, gfx.getHeight());
 	}
-	
 
 	boolean autoplay = true;
+	public boolean showpath = false;
 
 	@Override
 	public void draw(Canvas c) {
@@ -49,6 +51,18 @@ public class Ghost extends PathAI {
 
 		this.rect = new Rect(offset * gfx.getWidth() / 5, 0, offset
 				* gfx.getWidth() / 5 + gfx.getWidth() / 5, gfx.getHeight());
+
+		if (showpath) {
+
+			if (path == null)
+				return;
+			for (Point p : path) {
+				Paint paint = new Paint();
+				paint.setColor(Color.rgb(255, 255, 255));
+				c.drawCircle(p.x*sizeW+sizeW/2, p.y*sizeH+sizeH/2, 10, paint);
+			}
+		}
+
 		super.draw(c);
 	}
 
@@ -84,17 +98,17 @@ public class Ghost extends PathAI {
 					Point avoider = new Point((int) pacman.x, (int) pacman.y);
 					double d1 = p1.distance(avoider);
 					double d2 = p2.distance(avoider);
-					if(lhs.type!=0){
+					if (lhs.type != 0) {
 						d1 = 0;
 					}
-					if(rhs.type!=0){
+					if (rhs.type != 0) {
 						d2 = 0;
 					}
 
 					return (int) ((d2 - d1) * 1000);
 				}
 			});
-			
+
 			avoid = pacman;
 			avoidDanger = true;
 			toX = landscape.blocks.get(0).x;
