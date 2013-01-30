@@ -27,6 +27,7 @@ public class Ghost extends PathAI {
 
 	boolean autoplay = true;
 	public boolean showpath = false;
+	public boolean freeze;
 
 	@Override
 	public void draw(Canvas c) {
@@ -47,6 +48,9 @@ public class Ghost extends PathAI {
 			if (pacman.powerUp) {
 				offset = 4;
 			}
+
+			if (freeze)
+				offset = 4;
 		}
 
 		this.rect = new Rect(offset * gfx.getWidth() / 5, 0, offset
@@ -54,12 +58,21 @@ public class Ghost extends PathAI {
 
 		if (showpath) {
 
-			if (path == null)
-				return;
-			for (Point p : path) {
-				Paint paint = new Paint();
-				paint.setColor(Color.rgb(255, 255, 255));
-				c.drawCircle(p.x*sizeW+sizeW/2, p.y*sizeH+sizeH/2, 10, paint);
+			if (path != null) {
+				for (Point p : path) {
+					Paint paint = new Paint();
+
+					if (!freeze) {
+						paint.setColor(Color.rgb(255, 0, 0));
+						c.drawCircle(p.x * sizeW + sizeW / 2, p.y * sizeH
+								+ sizeH / 2, 4, paint);
+					} else {
+
+						paint.setColor(Color.rgb(255, 255, 255));
+						c.drawCircle(p.x * sizeW + sizeW / 2, p.y * sizeH
+								+ sizeH / 2, 10, paint);
+					}
+				}
 			}
 		}
 

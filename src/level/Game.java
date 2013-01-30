@@ -46,7 +46,8 @@ public class Game {
 		ghost = new Ghost(Infos.ghostBitmap, this.map);
 		ghost.x = 7;
 		ghost.y = 10;
-
+		ghost.showpath = false;
+		
 		pacman = new Pacman(Infos.ghostBitmap, this.map, this.food);
 		pacman.x = 1;
 		pacman.y = 1;
@@ -165,7 +166,6 @@ public class Game {
 				pills++;
 		}
 
-
 		if (actual == States.PACMANKILLED) {
 			return;
 		}
@@ -180,7 +180,24 @@ public class Game {
 		if (actual == States.GHOSTKILLED) {
 			return;
 		}
-		
+
+		if (actual != States.GAME) {
+
+			if ((((int)frame) % 2) == 0)
+				return
+						;
+			p.setColor(Color.WHITE);
+			p.setTextSize(70);
+
+			String text = "touch trigger";
+			Rect bound = new Rect();
+			p.getTextBounds(text, 0, text.length(), bound);
+
+			c.drawText(text, c.getWidth() / 2 - bound.width() / 2,
+					c.getHeight() / 2 - bound.height() / 2, p);
+
+		}
+
 		if (actual != States.GAME)
 			return;
 		p.setColor(Color.rgb(255, 255, 255));
@@ -197,6 +214,7 @@ public class Game {
 
 		actual = States.GAME;
 		ghost.autoplay = false;
+		ghost.showpath = true;
 	}
 
 	public void action(double delta) {
@@ -218,7 +236,7 @@ public class Game {
 				frame = 0;
 				pacman.powerUp = false;
 				busy = true;
-			}else if (!pacman.powerUp) {
+			} else if (!pacman.powerUp) {
 				actual = States.PACMANKILLED;
 				frame = 0;
 				busy = true;
@@ -232,13 +250,13 @@ public class Game {
 
 				ghost.toX = map.maze.length / 2;
 				ghost.toY = map.maze[0].length / 2;
+				ghost.freeze = true;
 				ghost.avoidDanger = false;
-				ghost.showpath = true;
 
 				if (ghost.toX == ghost.x && ghost.toY == ghost.y) {
 					actual = States.GAME;
 					busy = false;
-					ghost.showpath = false;
+					ghost.freeze = false;
 				}
 
 			}

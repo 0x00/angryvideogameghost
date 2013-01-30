@@ -4,5 +4,6 @@
     <string name="app_name">PacHunter</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="dummy_button">Start new game</string>
+    <string name="tutorial">Show tutorial</string>
 
 </resources>
