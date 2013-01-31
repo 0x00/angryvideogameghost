@@ -94,6 +94,7 @@ public class FullscreenActivity extends Activity {
 
 	public void showUI() {
 		showActionBar();
+		Infos.level = 1;
 		start.setVisibility(View.VISIBLE);
 		tutorial.setVisibility(View.VISIBLE);
 		screen.map.initGame();

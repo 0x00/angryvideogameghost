@@ -7,4 +7,5 @@ public class Infos {
 	public static Bitmap blockWhiteBitmap;
 	public static Bitmap ghostBitmap;
 	public static Score score;
+	public static int level = 1;
 }

@@ -47,7 +47,7 @@ public class Game {
 		ghost.x = 7;
 		ghost.y = 10;
 		ghost.showpath = false;
-		
+
 		pacman = new Pacman(Infos.ghostBitmap, this.map, this.food);
 		pacman.x = 1;
 		pacman.y = 1;
@@ -55,7 +55,7 @@ public class Game {
 		pacman.avoid = ghost;
 		ghost.pacman = pacman;
 
-		pacman.speed = 0.2;
+		pacman.speed = 0.20;
 		ghost.speed = 0.18;
 
 		for (int y = 0; y < map.maze[0].length; y++) {
@@ -167,6 +167,18 @@ public class Game {
 		}
 
 		if (actual == States.PACMANKILLED) {
+			c.drawColor(Color.BLACK);
+			p.setColor(Color.WHITE);
+
+			p.setTextSize(30);
+
+			String text = "get ready for\nthe next level";
+			Rect bound = new Rect();
+			p.getTextBounds(text, 0, text.length(), bound);
+
+			c.drawText(text, c.getWidth() / 2 - bound.width() / 2,
+					c.getHeight() / 2 - bound.height() / 2, p);
+
 			return;
 		}
 
@@ -183,9 +195,8 @@ public class Game {
 
 		if (actual != States.GAME) {
 
-			if ((((int)frame) % 2) == 0)
-				return
-						;
+			if ((((int) frame) % 2) == 0)
+				return;
 			p.setColor(Color.WHITE);
 			p.setTextSize(70);
 
@@ -200,9 +211,11 @@ public class Game {
 
 		if (actual != States.GAME)
 			return;
+
 		p.setColor(Color.rgb(255, 255, 255));
 		p.setTextSize(20);
-		c.drawText("Pills: " + pills, 10, 30, p);
+		c.drawText("Pills: " + pills, 10, 90, p);
+		c.drawText("Level: " + Infos.level, 190, 90, p);
 
 	}
 
@@ -219,6 +232,15 @@ public class Game {
 
 	public void action(double delta) {
 		frame += delta * 0.1;
+
+		if (actual==States.GAME && food.size() == 0) {
+			activity.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					activity.showUI();
+				}
+			});
+		}
 
 		if (ghost == null || ghost.target == null || pacman == null
 				|| pacman.target == null)
@@ -263,13 +285,12 @@ public class Game {
 			}
 
 			if (frame > 10 && actual == States.PACMANKILLED) {
-				// startGame();
-				activity.runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						activity.showUI();
-					}
-				});
+				if(ghost.autoplay){
+					initGame();
+				}else{
+					Infos.level++;
+					startGame();
+				}
 			}
 		}
 
