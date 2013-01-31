@@ -235,6 +235,7 @@ public class Game {
 				actual = States.GHOSTKILLED;
 				frame = 0;
 				pacman.powerUp = false;
+				pacman.avoidDanger = true;
 				busy = true;
 			} else if (!pacman.powerUp) {
 				actual = States.PACMANKILLED;
