@@ -56,7 +56,7 @@ public class Ghost extends PathAI {
 		this.rect = new Rect(offset * gfx.getWidth() / 5, 0, offset
 				* gfx.getWidth() / 5 + gfx.getWidth() / 5, gfx.getHeight());
 
-		if (showpath) {
+		if (showpath && ((int) frame) % 2 == 0) {
 
 			if (path != null) {
 				for (Point p : path) {
@@ -81,13 +81,15 @@ public class Ghost extends PathAI {
 
 	@Override
 	public void action(double delta) {
-		
-		if(freeze){
+
+		frame += delta * 0.9;
+
+		if (freeze) {
 			speed = 0.20;
-		}else{
+		} else {
 			speed = 0.14;
 		}
-		
+
 		super.action(delta);
 
 		if (!autoplay)

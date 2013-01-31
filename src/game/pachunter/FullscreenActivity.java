@@ -19,6 +19,7 @@ public class FullscreenActivity extends Activity {
 
 	Screen screen;
 	Button start;
+	private Button tutorial;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,10 @@ public class FullscreenActivity extends Activity {
 
 				Screen screen = (Screen) findViewById(R.id.screen1);
 
-				screen.map.ghost.toX = screen.map.transferX(x);
-				screen.map.ghost.toY = screen.map.transferY(y);
+				if (!screen.map.ghost.freeze) {
+					screen.map.ghost.toX = screen.map.transferX(x);
+					screen.map.ghost.toY = screen.map.transferY(y);
+				}
 
 				Log.d("goto", "goto: " + x + ", " + y);
 
@@ -64,6 +67,7 @@ public class FullscreenActivity extends Activity {
 		screen = (Screen) findViewById(R.id.screen1);
 
 		start = (Button) findViewById(R.id.dummy_button);
+		tutorial = (Button) findViewById(R.id.tutorial);
 		start.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -84,12 +88,14 @@ public class FullscreenActivity extends Activity {
 	public void hideUI() {
 		hideActionBar();
 		start.setVisibility(View.GONE);
+		tutorial.setVisibility(View.GONE);
 		screen.map.startGame();
 	}
 
 	public void showUI() {
 		showActionBar();
 		start.setVisibility(View.VISIBLE);
+		tutorial.setVisibility(View.VISIBLE);
 		screen.map.initGame();
 	}
 
