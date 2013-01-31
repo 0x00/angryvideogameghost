@@ -81,6 +81,13 @@ public class Ghost extends PathAI {
 
 	@Override
 	public void action(double delta) {
+		
+		if(freeze){
+			speed = 0.20;
+		}else{
+			speed = 0.14;
+		}
+		
 		super.action(delta);
 
 		if (!autoplay)

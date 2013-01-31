@@ -95,11 +95,15 @@ public class FullscreenActivity extends Activity {
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	void hideActionBar() {
+		if (Build.VERSION.SDK_INT < 16)
+			return;
 		getActionBar().hide();
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	void showActionBar() {
+		if (Build.VERSION.SDK_INT < 16)
+			return;
 		getActionBar().show();
 	}
 
