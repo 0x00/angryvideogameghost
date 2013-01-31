@@ -70,7 +70,7 @@ public class Ghost extends PathAI {
 
 						paint.setColor(Color.rgb(255, 255, 255));
 						c.drawCircle(p.x * sizeW + sizeW / 2, p.y * sizeH
-								+ sizeH / 2, 10, paint);
+								+ sizeH / 2, 6, paint);
 					}
 				}
 			}

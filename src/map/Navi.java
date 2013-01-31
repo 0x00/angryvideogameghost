@@ -121,7 +121,9 @@ public class Navi {
 
 		if (path != null && path.contains(from) && path.contains(to)) {
 			int idx = path.indexOf(from);
-			return path.subList(idx, path.size());
+			if (path.get(path.size() - 1) == to) {
+				return path.subList(idx, path.size());
+			}
 		}
 
 		this.target = to;

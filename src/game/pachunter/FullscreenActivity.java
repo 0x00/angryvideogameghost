@@ -50,12 +50,12 @@ public class FullscreenActivity extends Activity {
 
 				Screen screen = (Screen) findViewById(R.id.screen1);
 
-				if (!screen.map.ghost.freeze) {
+				if (!screen.map.busy) {
 					screen.map.ghost.toX = screen.map.transferX(x);
 					screen.map.ghost.toY = screen.map.transferY(y);
+					Log.d("goto", "goto: " + x + ", " + y);
 				}
 
-				Log.d("goto", "goto: " + x + ", " + y);
 
 				return false;
 			}

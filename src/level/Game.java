@@ -23,7 +23,7 @@ public class Game {
 	};
 
 	public States actual = States.TITLE;
-	boolean busy;
+	public boolean busy;
 
 	public int transferX(float x) {
 		int X = map.maze.length;
