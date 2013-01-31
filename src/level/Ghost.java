@@ -32,6 +32,8 @@ public class Ghost extends PathAI {
 	@Override
 	public void draw(Canvas c) {
 
+		offset = 0;
+
 		if (localDirection != null) {
 			if (localDirection.x < x)
 				offset = 0;
