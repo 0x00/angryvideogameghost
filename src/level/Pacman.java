@@ -1,5 +1,7 @@
 package level;
 
+import game.pachunter.R;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -13,6 +15,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
+import audio.Sounds;
 
 public class Pacman extends PathAI {
 	List<Food> food;
@@ -91,9 +94,10 @@ public class Pacman extends PathAI {
 		super.action(delta * 1.02);
 
 		powerClock -= delta * 0.1;
-		if (powerClock < 0) {
+		if (powerClock < 0 && powerUp) {
 			powerUp = false;
 			avoidDanger = true;
+			Sounds.startBackground(R.raw.pacman_background1);
 		}
 
 		frame += delta * 0.7;
@@ -107,8 +111,11 @@ public class Pacman extends PathAI {
 			if (f.active && f.target != null && target != null
 					&& f.target.intersect(target)) {
 				f.active = false;
+				Sounds.playMus(R.raw.waka);
 				if (f.powerUp) {
+					Sounds.playMus(R.raw.pacman_power1);
 					powerClock = 8;
+					Sounds.startBackground(R.raw.pacman_background2);
 					powerUp = true;
 					avoidDanger = false;
 					nav.path.clear();

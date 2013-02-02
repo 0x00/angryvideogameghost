@@ -1,6 +1,7 @@
 package level;
 
 import game.pachunter.FullscreenActivity;
+import game.pachunter.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import audio.Sounds;
 import data.Infos;
 
 public class Game {
@@ -36,6 +38,9 @@ public class Game {
 	}
 
 	public synchronized void initGame() {
+		
+		Infos.silent = true;
+		Sounds.stopBackground();
 
 		active = false;
 		food.clear();
@@ -228,6 +233,9 @@ public class Game {
 		actual = States.GAME;
 		ghost.autoplay = false;
 		ghost.showpath = true;
+		
+		Infos.silent = false;
+		Sounds.startBackground(R.raw.pacman_background1);
 	}
 
 	public void action(double delta) {
@@ -254,12 +262,14 @@ public class Game {
 			}
 
 			if (pacman.powerUp) {
+				Sounds.playMus(R.raw.pacman_getghost);
 				actual = States.GHOSTKILLED;
 				frame = 0;
 				pacman.powerUp = false;
 				pacman.avoidDanger = true;
 				busy = true;
 			} else if (!pacman.powerUp) {
+				Sounds.playMus(R.raw.pacman_death);
 				actual = States.PACMANKILLED;
 				frame = 0;
 				busy = true;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import audio.Sounds;
 import data.Infos;
 import data.Score;
 import display.Screen;
@@ -24,7 +25,10 @@ public class FullscreenActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		Infos.audio = new Sounds();
+		Sounds.init(this);
+		
 		Infos.blockBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.block);
 
