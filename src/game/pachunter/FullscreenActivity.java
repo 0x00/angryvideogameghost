@@ -22,12 +22,27 @@ public class FullscreenActivity extends Activity {
 	Button start;
 	private Button tutorial;
 
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Sounds.continueBackground();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Sounds.pauseBackground();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		Infos.audio = new Sounds();
 		Sounds.init(this);
+		
 		
 		Infos.blockBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.block);

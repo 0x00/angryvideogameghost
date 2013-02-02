@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PacHunter</string>
+    <string name="app_name">Angry Video Game Ghost</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="dummy_button">Start new game</string>
     <string name="tutorial">Show tutorial</string>

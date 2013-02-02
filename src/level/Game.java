@@ -218,7 +218,7 @@ public class Game {
 			return;
 
 		p.setColor(Color.rgb(255, 255, 255));
-		p.setTextSize(20);
+		p.setTextSize(40);
 		c.drawText("Pills: " + pills, 10, 90, p);
 		c.drawText("Level: " + Infos.level, 190, 90, p);
 

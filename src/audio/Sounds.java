@@ -20,6 +20,7 @@ public class Sounds {
 
 	public static MediaPlayer mediaPlayer;
 	private static int backgroundId;
+	private static int last = -1;
 
 	@SuppressLint("UseSparseArrays")
 	public static void init(Context context) {
@@ -66,13 +67,25 @@ public class Sounds {
 		pool.play(sound, volume, volume, 1, 0, 1.0f);
 
 	}
+	
+	public static void pauseBackground(){
+		pool.autoPause();
+	}
+	public static void continueBackground(){
+		pool.autoResume();
+	}
 
 	public static void startBackground(int r) {
+
+		if (last == r)
+			return;
+
 
 		if (Infos.silent)
 			return;
 
 		stopBackground();
+		last = r;
 
 		if (!soundsMap.containsKey(r)) {
 			return;
@@ -92,6 +105,7 @@ public class Sounds {
 	}
 
 	public static void stopBackground() {
+		last = -1;
 		pool.stop(backgroundId);
 	}
 }

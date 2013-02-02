@@ -94,7 +94,7 @@ public class Pacman extends PathAI {
 		super.action(delta * 1.02);
 
 		powerClock -= delta * 0.1;
-		if (powerClock < 0 && powerUp) {
+		if (powerClock < 0) {
 			powerUp = false;
 			avoidDanger = true;
 			Sounds.startBackground(R.raw.pacman_background1);
