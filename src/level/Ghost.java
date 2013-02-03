@@ -22,7 +22,7 @@ public class Ghost extends PathAI {
 
 		border = 3;
 		if (this.gfx != null)
-			rect = new Rect(0, 0, gfx.getWidth() / 5, gfx.getHeight());
+			rect = new Rect(0, 0, gfx.getWidth() / 6, gfx.getHeight());
 	}
 
 	boolean autoplay = true;
@@ -52,11 +52,11 @@ public class Ghost extends PathAI {
 			}
 
 			if (freeze)
-				offset = 4;
+				offset = 5;
 		}
 
-		this.rect = new Rect(offset * gfx.getWidth() / 5, 0, offset
-				* gfx.getWidth() / 5 + gfx.getWidth() / 5, gfx.getHeight());
+		this.rect = new Rect(offset * gfx.getWidth() / 6, 0, offset
+				* gfx.getWidth() / 6 + gfx.getWidth() / 6, gfx.getHeight());
 
 		if (showpath && ((int) frame) % 2 == 0) {
 
