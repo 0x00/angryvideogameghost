@@ -120,7 +120,7 @@ public class Navi {
 	public List<Point> findPath(Point from, Point to, Point avoid) {
 
 		if (map.maze[to.x][to.y].type != 0)
-			new LinkedList<Point>();
+			return new LinkedList<Point>();
 
 		if (path != null && path.contains(from) && path.contains(to)) {
 			int idx = path.indexOf(from);

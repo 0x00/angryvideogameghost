@@ -220,7 +220,11 @@ public class Game {
 		p.setColor(Color.rgb(255, 255, 255));
 		p.setTextSize(40);
 		c.drawText("Pills: " + pills, 10, 90, p);
-		c.drawText("Level: " + Infos.level, 190, 90, p);
+		Rect bound = new Rect();
+		
+		String level = "Level: " + Infos.level;
+		p.getTextBounds(level, 0, level.length(), bound);
+		c.drawText(level, c.getWidth()-bound.width()-10, 90, p);
 
 	}
 

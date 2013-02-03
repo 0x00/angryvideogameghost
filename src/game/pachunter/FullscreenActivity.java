@@ -2,15 +2,26 @@ package game.pachunter;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import audio.Sounds;
 import data.Infos;
 import data.Score;
@@ -22,28 +33,26 @@ public class FullscreenActivity extends Activity {
 	Button start;
 	private Button tutorial;
 
-	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		Sounds.continueBackground();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		Sounds.pauseBackground();
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		Infos.audio = new Sounds();
 		Sounds.init(this);
-		
-		
+
 		Infos.blockBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.block);
 
@@ -75,7 +84,6 @@ public class FullscreenActivity extends Activity {
 					Log.d("goto", "goto: " + x + ", " + y);
 				}
 
-
 				return false;
 			}
 
@@ -87,6 +95,18 @@ public class FullscreenActivity extends Activity {
 
 		start = (Button) findViewById(R.id.dummy_button);
 		tutorial = (Button) findViewById(R.id.tutorial);
+
+		tutorial.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				showAlert();
+				return false;
+			}
+
+		});
+
 		start.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -104,6 +124,34 @@ public class FullscreenActivity extends Activity {
 		System.out.println();
 	}
 
+	boolean alert = false;
+	private void showAlert() {
+		if(alert) return;
+		
+		alert = true;
+		Builder b = new AlertDialog.Builder(this);
+		final AlertDialog a = b.create();
+		
+		LayoutInflater factory = LayoutInflater.from(FullscreenActivity.this);
+		View tutor = factory.inflate(R.layout.tutorial,null);
+		a.setView(tutor);
+		
+		Button dis = (Button) tutor.findViewById(R.id.button1);
+		dis.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				a.cancel();
+				alert = false;
+				return false;
+			}
+		});
+
+		
+		a.show();
+		
+		
+	}
 	public void hideUI() {
 		hideActionBar();
 		start.setVisibility(View.GONE);
