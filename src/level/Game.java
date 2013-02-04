@@ -230,14 +230,15 @@ public class Game {
 
 		if (actual != States.TITLE) {
 
+			Rect bound = new Rect();
+
 			p.setColor(Color.rgb(255, 255, 255));
 			p.setTextSize(34);
-			c.drawText("Pills: " + pills, 10, 10, p);
-			Rect bound = new Rect();
+			c.drawText("Pills: " + pills, 10, 25, p);
 
 			String level = "Level: " + Infos.level;
 			p.getTextBounds(level, 0, level.length(), bound);
-			c.drawText(level, c.getWidth() - bound.width() - 10, 10, p);
+			c.drawText(level, c.getWidth() - bound.width() - 10, 25, p);
 		}
 
 	}
