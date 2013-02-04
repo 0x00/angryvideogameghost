@@ -81,6 +81,7 @@ public class FullscreenActivity extends Activity {
 
 		};
 
+		
 		setContentView(R.layout.activity_fullscreen);
 
 		screen = (Screen) findViewById(R.id.screen1);

@@ -15,7 +15,7 @@ import android.media.SoundPool;
 public class Sounds {
 
 	static Context context;
-	static SoundPool pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
+	static SoundPool pool;
 	static HashMap<Integer, Integer> soundsMap;
 
 	public static MediaPlayer mediaPlayer;
@@ -24,6 +24,8 @@ public class Sounds {
 
 	@SuppressLint("UseSparseArrays")
 	public static void init(Context context) {
+
+		pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
 		Sounds.context = context;
 
 		soundsMap = new HashMap<Integer, Integer>();
@@ -67,11 +69,12 @@ public class Sounds {
 		pool.play(sound, volume, volume, 1, 0, 1.0f);
 
 	}
-	
-	public static void pauseBackground(){
+
+	public static void pauseBackground() {
 		pool.autoPause();
 	}
-	public static void continueBackground(){
+
+	public static void continueBackground() {
 		pool.autoResume();
 	}
 
@@ -79,7 +82,6 @@ public class Sounds {
 
 		if (last == r)
 			return;
-
 
 		if (Infos.silent)
 			return;
