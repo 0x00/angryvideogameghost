@@ -4,24 +4,16 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnKeyListener;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import audio.Sounds;
 import data.Infos;
 import data.Score;
@@ -59,7 +51,7 @@ public class FullscreenActivity extends Activity {
 		Infos.ghostBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ghosts);
 
-		// Infos.ghostBitmap = BitmapHelper.changeHue(Infos.ghostBitmap, -0.3);
+		//Infos.ghostBitmap = BitmapHelper.changeHue(Infos.ghostBitmap, -0.3);
 
 		Infos.blockWhiteBitmap = BitmapFactory.decodeResource(getResources(),
 				R.drawable.blockwhite);

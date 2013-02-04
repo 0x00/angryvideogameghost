@@ -147,7 +147,7 @@ public class Game {
 			for (int x = 0; x < map.maze.length; x++) {
 				boolean oo = map.maze[x][y].type > 0 ? true : false;
 
-				if (pacman.powerUp && ((int) frame) % 2 == 0) {
+				if ((pacman.powerUp || actual==States.GAMEOVER) && ((int) frame) % 2 == 0) {
 					blockW.x = x / mapW;
 					blockW.y = y / mapH;
 					if (oo)
@@ -188,6 +188,17 @@ public class Game {
 		}
 
 		if (actual == States.GAMEOVER) {
+			p.setColor(Color.WHITE);
+
+			p.setTextSize(30);
+
+			String text = "Pacman wins, Game Over";
+			Rect bound = new Rect();
+			p.getTextBounds(text, 0, text.length(), bound);
+
+			c.drawText(text, c.getWidth() / 2 - bound.width() / 2,
+					c.getHeight() / 2 - bound.height() / 2, p);
+
 			return;
 		}
 
@@ -231,7 +242,8 @@ public class Game {
 	public synchronized void startGame() {
 		initGame();
 
-		pacman.speed = 0.14;
+		pacman.speed = 0.10 + Infos.level*0.01;
+		pacman.speed = 0.10 + Math.min(10,Infos.level)*0.01;
 		ghost.speed = 0.14;
 
 		actual = States.GAME;
@@ -245,13 +257,10 @@ public class Game {
 	public void action(double delta) {
 		frame += delta * 0.1;
 
-		if (actual==States.GAME && food.size() == 0) {
-			activity.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					activity.showUI();
-				}
-			});
+		if (actual==States.GAME && pills == 0) {
+			frame = 0;
+			busy = true;
+			actual = States.GAMEOVER;
 		}
 
 		if (ghost == null || ghost.target == null || pacman == null
@@ -282,6 +291,17 @@ public class Game {
 		}
 
 		if (busy) {
+			
+			if(actual == States.GAMEOVER){
+				if(frame>9){
+					activity.runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							activity.showUI();
+						}
+					});
+				}
+			}
 
 			if (actual == States.GHOSTKILLED) {
 
