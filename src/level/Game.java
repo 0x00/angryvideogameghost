@@ -245,7 +245,7 @@ public class Game {
 	public synchronized void startGame() {
 		initGame();
 
-		pacman.speed = 0.60 + Math.min(10, Infos.level) * 0.01;
+		pacman.speed = 0.10 + Math.min(20, Infos.level) * 0.01;
 		ghost.speed = 0.14;
 
 		actual = States.GAME;
