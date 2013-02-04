@@ -260,7 +260,7 @@ public class Game {
 	public void action(double delta) {
 		frame += delta * 0.1;
 
-		if (actual == States.GAME && pills == 0) {
+		if (actual == States.GAME && pills == 0 && food.size()>0) {
 			frame = 0;
 			busy = true;
 			actual = States.GAMEOVER;
