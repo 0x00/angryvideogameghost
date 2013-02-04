@@ -4,6 +4,7 @@ public class Block {
 	public int type;
 	public int x;
 	public int y;
+	public int c;
 	
 	public Block(int type, int x, int y){
 		this.type = type;

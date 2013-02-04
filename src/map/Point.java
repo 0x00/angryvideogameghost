@@ -11,8 +11,10 @@ public class Point {
 	public int y;
 	public int allcosts;
 	List<Point> history = new LinkedList<Point>();
+	public int c;
 
 	public Point(int x, int y) {
+		this.c = 0;
 		this.x = x;
 		this.y = y;
 	}

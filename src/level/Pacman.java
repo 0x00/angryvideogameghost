@@ -131,13 +131,15 @@ public class Pacman extends PathAI {
 		if (powerUp) {
 
 			if (avoid.x == landscape.maze.length / 2
-					&& avoid.y == landscape.maze[0].length / 2)
-				return;
+					&& avoid.y == landscape.maze[0].length / 2) {
 
-			toX = avoid.x;
-			toY = avoid.y;
-			targetFood = null;
-			return;
+			} else {
+				toX = avoid.x;
+				toY = avoid.y;
+				targetFood = null;
+				return;
+			}
+
 		}
 
 		if (distance(avoid) < 3)
