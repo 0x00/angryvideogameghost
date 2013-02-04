@@ -5,6 +5,8 @@ import java.util.List;
 
 
 public class Point {
+	
+	
 	public int x;
 	public int y;
 	public int allcosts;

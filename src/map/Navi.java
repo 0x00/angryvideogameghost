@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.util.Log;
+
 public class Navi {
 
 	Landscape map;
@@ -70,7 +72,7 @@ public class Navi {
 					actual.history.add(actual);
 				}
 
-				add.history = new ArrayList<Point>(actual.history);
+				add.history = new LinkedList<Point>(actual.history);
 				add.history.add(p);
 				add.allcosts = actual.allcosts + 1;
 			}
@@ -124,11 +126,13 @@ public class Navi {
 
 		if (path != null && path.contains(from) && path.contains(to)) {
 			int idx = path.indexOf(from);
-			if (path.get(path.size() - 1) == to) {
+			Log.d("pathplan last", ""+path.get(path.size() - 1) );
+			if (path.get(path.size() - 1).equals(to)) {
 				return path.subList(idx, path.size());
 			}
 		}
 
+		Log.d("pathplan", "new");
 		this.target = to;
 		this.avoid = avoid;
 

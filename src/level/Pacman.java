@@ -129,6 +129,11 @@ public class Pacman extends PathAI {
 	private void assignTarget() {
 
 		if (powerUp) {
+
+			if (avoid.x == landscape.maze.length / 2
+					&& avoid.y == landscape.maze[0].length / 2)
+				return;
+
 			toX = avoid.x;
 			toY = avoid.y;
 			targetFood = null;

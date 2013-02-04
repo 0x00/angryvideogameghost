@@ -38,7 +38,7 @@ public class Game {
 	}
 
 	public synchronized void initGame() {
-		
+
 		Infos.silent = true;
 		Sounds.stopBackground();
 
@@ -73,9 +73,11 @@ public class Game {
 							&& y < map.maze[0].length / 2 + 2) {
 						continue;
 					}
+					// if (Math.random() > 0.99) {
 					Food f = new Food(x, y);
 					food.add(f);
 					f.border = 15;
+					// }
 
 				}
 			}
@@ -147,7 +149,8 @@ public class Game {
 			for (int x = 0; x < map.maze.length; x++) {
 				boolean oo = map.maze[x][y].type > 0 ? true : false;
 
-				if ((pacman.powerUp || actual==States.GAMEOVER) && ((int) frame) % 2 == 0) {
+				if ((pacman.powerUp || actual == States.GAMEOVER)
+						&& ((int) frame) % 2 == 0) {
 					blockW.x = x / mapW;
 					blockW.y = y / mapH;
 					if (oo)
@@ -209,7 +212,7 @@ public class Game {
 			return;
 		}
 
-		if (actual != States.GAME) {
+		if (actual == States.TITLE) {
 
 			if ((((int) frame) % 2) == 0)
 				return;
@@ -225,31 +228,31 @@ public class Game {
 
 		}
 
-		if (actual != States.GAME)
-			return;
+		if (actual != States.TITLE) {
 
-		p.setColor(Color.rgb(255, 255, 255));
-		p.setTextSize(34);
-		c.drawText("Pills: " + pills, 10, 10, p);
-		Rect bound = new Rect();
-		
-		String level = "Level: " + Infos.level;
-		p.getTextBounds(level, 0, level.length(), bound);
-		c.drawText(level, c.getWidth()-bound.width()-10, 10, p);
+			p.setColor(Color.rgb(255, 255, 255));
+			p.setTextSize(34);
+			c.drawText("Pills: " + pills, 10, 10, p);
+			Rect bound = new Rect();
+
+			String level = "Level: " + Infos.level;
+			p.getTextBounds(level, 0, level.length(), bound);
+			c.drawText(level, c.getWidth() - bound.width() - 10, 10, p);
+		}
 
 	}
 
 	public synchronized void startGame() {
 		initGame();
 
-		pacman.speed = 0.10 + Infos.level*0.01;
-		pacman.speed = 0.10 + Math.min(10,Infos.level)*0.01;
+		pacman.speed = 0.10 + Infos.level * 0.01;
+		pacman.speed = 0.10 + Math.min(10, Infos.level) * 0.01;
 		ghost.speed = 0.14;
 
 		actual = States.GAME;
 		ghost.autoplay = false;
 		ghost.showpath = true;
-		
+
 		Infos.silent = false;
 		Sounds.startBackground(R.raw.pacman_background1);
 	}
@@ -257,7 +260,7 @@ public class Game {
 	public void action(double delta) {
 		frame += delta * 0.1;
 
-		if (actual==States.GAME && pills == 0) {
+		if (actual == States.GAME && pills == 0) {
 			frame = 0;
 			busy = true;
 			actual = States.GAMEOVER;
@@ -269,7 +272,7 @@ public class Game {
 
 		if (ghost.target.intersect(pacman.target) && !busy) {
 
-			if (actual == States.TITLE && !pacman.powerUp) {
+			if (actual == States.TITLE) {
 				initGame();
 				return;
 			}
@@ -291,9 +294,9 @@ public class Game {
 		}
 
 		if (busy) {
-			
-			if(actual == States.GAMEOVER){
-				if(frame>9){
+
+			if (actual == States.GAMEOVER) {
+				if (frame > 9) {
 					activity.runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -319,9 +322,9 @@ public class Game {
 			}
 
 			if (frame > 10 && actual == States.PACMANKILLED) {
-				if(ghost.autoplay){
+				if (ghost.autoplay) {
 					initGame();
-				}else{
+				} else {
 					Infos.level++;
 					startGame();
 				}
