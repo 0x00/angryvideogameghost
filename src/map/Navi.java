@@ -72,7 +72,7 @@ public class Navi {
 
 				add.history = new LinkedList<Point>(actual.history);
 				add.history.add(p);
-				add.allcosts = actual.allcosts + 1;
+				add.allcosts = actual.allcosts + 1 + map.maze[add.x][add.y].c;
 			}
 		}
 

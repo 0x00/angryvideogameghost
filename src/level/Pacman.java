@@ -29,6 +29,8 @@ public class Pacman extends PathAI {
 			rect = new Rect(0, 0, gfx.getWidth(), gfx.getHeight());
 
 		this.food = food;
+		
+		consume = true;
 	}
 
 	float frame = 1;

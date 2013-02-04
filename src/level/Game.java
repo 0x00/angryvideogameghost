@@ -60,7 +60,7 @@ public class Game {
 		pacman.avoid = ghost;
 		ghost.pacman = pacman;
 
-		pacman.speed = 0.20;
+		pacman.speed = 0.14;
 		ghost.speed = 0.18;
 
 		for (int y = 0; y < map.maze[0].length; y++) {

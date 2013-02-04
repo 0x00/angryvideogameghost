@@ -29,6 +29,8 @@ public class PathAI extends Drawable {
 	public double speed = 0.1;
 	public List<Point> path;
 
+	public boolean consume = false;
+
 	public void action(double delta) {
 
 		if (toX == -1)
@@ -44,6 +46,10 @@ public class PathAI extends Drawable {
 			/* Log.d("path", "stop"); */
 		} else if (moving) {
 			move(delta);
+			if (consume) {
+				landscape.maze[tx][ty].c = 1;
+				
+			}
 
 		} else if (!moving) {
 			Log.d("pathplan", "pathplan " + tx + " " + ty + ":=> " + ttoX + " "
