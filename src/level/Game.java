@@ -106,6 +106,7 @@ public class Game {
 	Paint p = new Paint();
 
 	long pills = 0;
+	int ghosts = 3;
 	public FullscreenActivity activity;
 
 	public void draw(Canvas c) {
@@ -235,6 +236,8 @@ public class Game {
 			p.setColor(Color.rgb(255, 255, 255));
 			p.setTextSize(34);
 			c.drawText("Pills: " + pills, 10, 25, p);
+			String lives = "Lives: " + ghosts;
+			c.drawText(lives, 10, c.getHeight() - 25, p);
 
 			String level = "Level: " + Infos.level;
 			p.getTextBounds(level, 0, level.length(), bound);
@@ -254,13 +257,14 @@ public class Game {
 		ghost.showpath = true;
 
 		Infos.silent = false;
+		ghosts = 3;
 		Sounds.startBackground(R.raw.pacman_background1);
 	}
 
 	public void action(double delta) {
 		frame += delta * 0.1;
 
-		if (actual == States.GAME && pills == 0 && food.size()>0) {
+		if (actual == States.GAME && active && (pills == 0 || ghosts < 0)) {
 			frame = 0;
 			busy = true;
 			actual = States.GAMEOVER;
@@ -284,6 +288,7 @@ public class Game {
 				pacman.powerUp = false;
 				pacman.avoidDanger = true;
 				busy = true;
+				ghosts--;
 			} else if (!pacman.powerUp) {
 				Sounds.playMus(R.raw.pacman_death);
 				actual = States.PACMANKILLED;
