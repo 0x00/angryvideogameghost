@@ -53,6 +53,9 @@ public class Game {
 		ghost.y = 10;
 		ghost.showpath = false;
 
+		loadingIndicator = new Ghost(Infos.ghostBitmap, this.map);
+		loadingIndicator2 = new Pacman(Infos.ghostBitmap, this.map, this.food);
+
 		pacman = new Pacman(Infos.ghostBitmap, this.map, this.food);
 		pacman.x = 1;
 		pacman.y = 1;
@@ -96,6 +99,9 @@ public class Game {
 	Block blockW = new Block(Infos.blockWhiteBitmap);
 	Block block = new Block(Infos.blockBitmap);
 
+	public Ghost loadingIndicator;
+	public Pacman loadingIndicator2;
+
 	/* this is the Player */
 	public Ghost ghost;
 	public List<Food> food = new LinkedList<Food>();
@@ -123,6 +129,20 @@ public class Game {
 
 			c.drawText(text, c.getWidth() / 2 - bound.width() / 2,
 					c.getHeight() / 2 - bound.height() / 2, p);
+
+			loadingIndicator.sizeW = block.sizeW;
+			loadingIndicator.sizeH = block.sizeH;
+			loadingIndicator2.sizeW = block.sizeW;
+			loadingIndicator2.sizeH = block.sizeH;
+
+			loadingIndicator.x = 3;
+			loadingIndicator.y = 6;
+
+			loadingIndicator2.x = 5;
+			loadingIndicator2.y = 5;
+
+			loadingIndicator.draw(c);
+			loadingIndicator2.draw(c);
 
 			return;
 		}
@@ -263,6 +283,13 @@ public class Game {
 
 	public void action(double delta) {
 		frame += delta * 0.1;
+
+		loadingIndicator.x += delta * 0.1;
+		loadingIndicator2.x += delta * 0.1;
+		if (loadingIndicator.x > map.maze.length)
+			loadingIndicator.x = 0;
+		if (loadingIndicator2.x > map.maze.length)
+			loadingIndicator2.x = 0;
 
 		if (actual == States.GAME && active && (pills == 0 || ghosts < 0)) {
 			frame = 0;
