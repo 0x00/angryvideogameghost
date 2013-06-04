@@ -29,19 +29,17 @@ public class Sounds {
 		Sounds.context = context;
 
 		soundsMap = new HashMap<Integer, Integer>();
-		soundsMap.put(R.raw.pacman_background1,
-				pool.load(context, R.raw.pacman_background1, 1));
-		soundsMap.put(R.raw.pacman_background2,
-				pool.load(context, R.raw.pacman_background2, 1));
-		soundsMap.put(R.raw.pacman_getghost,
-				pool.load(context, R.raw.pacman_getghost, 1));
-		soundsMap.put(R.raw.pacman_power1,
-				pool.load(context, R.raw.pacman_power1, 1));
-		soundsMap.put(R.raw.pacman_alarm1,
-				pool.load(context, R.raw.pacman_alarm1, 1));
-		soundsMap.put(R.raw.pacman_death,
-				pool.load(context, R.raw.pacman_death, 1));
-		soundsMap.put(R.raw.waka, pool.load(context, R.raw.waka, 1));
+		soundsMap.put(R.raw.background,
+				pool.load(context, R.raw.background, 1));
+		
+		soundsMap.put(R.raw.creepybackground,
+				pool.load(context, R.raw.creepybackground, 1));
+		
+		soundsMap.put(R.raw.killed,
+				pool.load(context, R.raw.killed, 1));
+		
+		soundsMap.put(R.raw.waka,
+				pool.load(context, R.raw.waka, 1));
 
 	}
 

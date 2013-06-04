@@ -65,7 +65,7 @@ public class Ghost extends PathAI {
 					Paint paint = new Paint();
 
 					if (!freeze) {
-						paint.setColor(Color.rgb(255, 0, 0));
+						paint.setColor(Color.rgb(0, 155, 0));
 						c.drawCircle(p.x * sizeW + sizeW / 2, p.y * sizeH
 								+ sizeH / 2, 6, paint);
 					} else {

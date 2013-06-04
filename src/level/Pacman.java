@@ -51,7 +51,7 @@ public class Pacman extends PathAI {
 		paint.setColor(Color.rgb(255, 255, 0));
 		c.drawCircle(X + sizeW / 2, Y + sizeH / 2, sizeW / 2 - border, paint);
 
-		paint.setColor(Color.BLACK);
+		paint.setColor(Color.rgb(0,100,0));
 
 		double fr = Math.abs(Math.sin(frame));
 
@@ -99,7 +99,7 @@ public class Pacman extends PathAI {
 		if (powerClock < 0) {
 			powerUp = false;
 			avoidDanger = true;
-			Sounds.startBackground(R.raw.pacman_background1);
+			Sounds.startBackground(R.raw.background);
 		}
 
 		frame += delta * 0.7;
@@ -115,9 +115,9 @@ public class Pacman extends PathAI {
 				f.active = false;
 				Sounds.playMus(R.raw.waka);
 				if (f.powerUp) {
-					Sounds.playMus(R.raw.pacman_power1);
+					Sounds.playMus(R.raw.waka);
 					powerClock = 8;
-					Sounds.startBackground(R.raw.pacman_background2);
+					Sounds.startBackground(R.raw.creepybackground);
 					powerUp = true;
 					avoidDanger = false;
 					nav.path.clear();

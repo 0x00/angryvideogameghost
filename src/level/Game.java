@@ -116,6 +116,7 @@ public class Game {
 	public FullscreenActivity activity;
 
 	public void draw(Canvas c) {
+		c.drawColor(Color.rgb(0,100,0));
 
 		if (!active) {
 			c.drawColor(Color.BLACK);
@@ -278,7 +279,7 @@ public class Game {
 
 		Infos.silent = false;
 		ghosts = 3;
-		Sounds.startBackground(R.raw.pacman_background1);
+		Sounds.startBackground(R.raw.background);
 	}
 
 	public void action(double delta) {
@@ -309,7 +310,7 @@ public class Game {
 			}
 
 			if (pacman.powerUp) {
-				Sounds.playMus(R.raw.pacman_getghost);
+				Sounds.playMus(R.raw.killed);
 				actual = States.GHOSTKILLED;
 				frame = 0;
 				pacman.powerUp = false;
@@ -317,7 +318,7 @@ public class Game {
 				busy = true;
 				ghosts--;
 			} else if (!pacman.powerUp) {
-				Sounds.playMus(R.raw.pacman_death);
+				Sounds.playMus(R.raw.killed);
 				actual = States.PACMANKILLED;
 				frame = 0;
 				busy = true;

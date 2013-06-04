@@ -1,7 +1,6 @@
 package display;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 
 public class Controller extends Thread {
 
@@ -48,7 +47,6 @@ public class Controller extends Thread {
 	}
 
 	private void draw(Canvas c) {
-		c.drawColor(Color.BLACK);
 		scr.map.draw(c);
 	}
 
