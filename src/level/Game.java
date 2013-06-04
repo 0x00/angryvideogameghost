@@ -279,7 +279,7 @@ public class Game {
 
 		Infos.silent = false;
 		ghosts = 3;
-		Sounds.startBackground(R.raw.background);
+		//Sounds.startBackground(R.raw.background);
 	}
 
 	public void action(double delta) {

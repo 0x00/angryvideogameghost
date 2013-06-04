@@ -99,7 +99,7 @@ public class Pacman extends PathAI {
 		if (powerClock < 0) {
 			powerUp = false;
 			avoidDanger = true;
-			Sounds.startBackground(R.raw.background);
+			//Sounds.startBackground(R.raw.background);
 		}
 
 		frame += delta * 0.7;
@@ -115,9 +115,9 @@ public class Pacman extends PathAI {
 				f.active = false;
 				Sounds.playMus(R.raw.waka);
 				if (f.powerUp) {
-					Sounds.playMus(R.raw.waka);
+					//Sounds.playMus(R.raw.waka);
 					powerClock = 8;
-					Sounds.startBackground(R.raw.creepybackground);
+					//Sounds.startBackground(R.raw.creepybackground);
 					powerUp = true;
 					avoidDanger = false;
 					nav.path.clear();
