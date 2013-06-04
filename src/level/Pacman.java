@@ -48,7 +48,7 @@ public class Pacman extends PathAI {
 				+ sizeH - border);
 
 		Paint paint = new Paint();
-		paint.setColor(Color.rgb(255, 255, 0));
+		paint.setColor(Color.rgb(55, 255, 0));
 		c.drawCircle(X + sizeW / 2, Y + sizeH / 2, sizeW / 2 - border, paint);
 
 		paint.setColor(Color.rgb(0,100,0));
