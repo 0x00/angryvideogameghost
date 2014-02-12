@@ -116,7 +116,7 @@ public class Game {
 	public FullscreenActivity activity;
 
 	public void draw(Canvas c) {
-		c.drawColor(Color.rgb(0,100,0));
+		c.drawColor(Color.rgb(0,0,0));
 
 		if (!active) {
 			c.drawColor(Color.BLACK);
