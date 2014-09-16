@@ -279,7 +279,7 @@ public class Game {
 
 		Infos.silent = false;
 		ghosts = 3;
-		//Sounds.startBackground(R.raw.background);
+		Sounds.startBackground(R.raw.pacman_background1);
 	}
 
 	public void action(double delta) {
@@ -310,7 +310,7 @@ public class Game {
 			}
 
 			if (pacman.powerUp) {
-				Sounds.playMus(R.raw.killed);
+				Sounds.playMus(R.raw.pacman_getghost);
 				actual = States.GHOSTKILLED;
 				frame = 0;
 				pacman.powerUp = false;
@@ -318,7 +318,7 @@ public class Game {
 				busy = true;
 				ghosts--;
 			} else if (!pacman.powerUp) {
-				Sounds.playMus(R.raw.killed);
+				Sounds.playMus(R.raw.pacman_death);
 				actual = States.PACMANKILLED;
 				frame = 0;
 				busy = true;
