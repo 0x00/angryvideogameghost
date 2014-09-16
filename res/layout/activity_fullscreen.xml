@@ -3,24 +3,13 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <!-- <com.google.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="a1510f8a2ca6ba6"
-        ads:loadAdOnCreate="true"
-        ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID" >
-    </com.google.ads.AdView>-->
+    android:orientation="vertical" >
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#0099cc"
         tools:context=".FullscreenActivity" >
-      
 
         <display.Screen
             android:id="@+id/screen1"
